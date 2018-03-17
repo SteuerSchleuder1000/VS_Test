@@ -137,7 +137,11 @@ class TableWindow {
             btn.innerHTML = btnIdToText[f]
             btn.id = f
             btn.className = 'folderBtn optionBtn'
-            var trigger = function (e) {this.f = e.target.id; this.plot()}
+            var trigger = function (e) {
+                this.f = e.target.id
+                this.mode = 'matchup'
+                this.plot()
+            }
             btn.onclick = trigger.bind(this)
             this.dropdownFolders.format.appendChild(btn)
         }
@@ -147,7 +151,11 @@ class TableWindow {
             btn.innerHTML = btnIdToText[t]
             btn.id = t
             btn.className = 'folderBtn optionBtn'
-            var trigger = function (e) {this.t = e.target.id; this.plot()}
+            var trigger = function (e) {
+                this.t = e.target.id
+                this.mode = 'matchup'
+                this.plot()
+            }
             btn.onclick = trigger.bind(this)
             this.dropdownFolders.time.appendChild(btn)
         }
@@ -157,17 +165,22 @@ class TableWindow {
             btn.innerHTML = btnIdToText[r]
             btn.id = r
             btn.className = 'folderBtn optionBtn'
-            var trigger = function (e) {this.r = e.target.id; this.plot()}
+            var trigger = function (e) {
+                this.r = e.target.id
+                this.mode = 'matchup'
+                this.plot()
+            }
             btn.onclick = trigger.bind(this)
             this.dropdownFolders.rank.appendChild(btn)
         }
 
-        for (var s of this.sortOptions) {
-            var btn = document.createElement('button')
+        for (let s of this.sortOptions) {
+            let btn = document.createElement('button')
             btn.innerHTML = btnIdToText[s]
             btn.id = s
             btn.className = 'folderBtn optionBtn'
-            var trigger = function (e) {
+            let trigger = function (e) {
+                this.mode = 'matchup'
                 this.sortBy = e.target.id; 
                 this.data[this.f][this.t][this.r].sortTableBy(this.sortBy)
                 this.renderOptions()
@@ -256,21 +269,22 @@ class TableWindow {
 
     // simulation (PREMIUM only)
     simulation() {
-        let simulationDiv = document.querySelector('#tableWindow .chartFooterBtn.equilibrium')
 
         if (this.mode == 'simulation') { 
-            simulationDiv.classList.remove('highlighted')
+            //simulationDiv.classList.remove('highlighted')
             this.mode = 'matchup'
         }
         else { 
-            simulationDiv.classList.add('highlighted') 
+            //simulationDiv.classList.add('highlighted') 
             this.mode = 'simulation'
         }     
+        this.renderOptions()
         this.plot()
     }
     
     // adds numbers to the plot 
     annotate() { 
+        this.mode = 'matchup'
         if (this.annotated) { this.nrGamesBtn.classList.remove('highlighted') }
         else { this.nrGamesBtn.classList.add('highlighted') }
         this.annotated = !this.annotated        
@@ -279,8 +293,9 @@ class TableWindow {
 
     // changes color theme of the heatmap
     updateColorTheme() { 
+        this.mode = 'matchup'
         MU_COLOR_IDX = (MU_COLOR_IDX + 1) % 3
-        this.data[this.f][this.t][this.r].plot();
+        this.plot();
     }
     
     // sets text of option buttons in the content-header
@@ -289,6 +304,10 @@ class TableWindow {
         document.querySelector("#tableWindow #timeBtn").innerHTML =   (MOBILE) ? btnIdToText_m[this.t] : btnIdToText[this.t]
         document.querySelector("#tableWindow #ranksBtn").innerHTML =  (MOBILE) ? btnIdToText_m[this.r] : btnIdToText[this.r]
         document.querySelector("#tableWindow #sortBtn").innerHTML =   (MOBILE) ? btnIdToText_m[this.sortBy] : btnIdToText[this.sortBy]
+
+        let simulationDiv = document.querySelector('#tableWindow .chartFooterBtn.equilibrium')
+        if (this.mode == 'matchup') { simulationDiv.classList.remove('highlighted') }
+        if (this.mode == 'simulation' && !simulationDiv.classList.contains('highlighted')) { simulationDiv.classList.add('highlighted') }
     }
 
     setTotGames() { this.nrGamesP.innerHTML = this.nrGames.toLocaleString()+" games" }

@@ -44,8 +44,8 @@ class PowerWindow {
         this.rankBrackets = [
             {name:'All Ranks',  games:{}, start: 0, end: 15},
             {name:'L',          games:{}, start: 0, end: 0},
-            {name:'1-5',        games:{}, start: 1, end: 5},
-            {name:'6-15',       games:{}, start: 6, end: 15},
+            {name:'1-4',        games:{}, start: 1, end: 4},
+            {name:'5-15',       games:{}, start: 5, end: 15},
         ]
 
         
@@ -86,8 +86,9 @@ class PowerWindow {
     }// buttonTrigger
 
     pressButton(e) {
-        app.ui.powerWindow.display(false)
-        app.ui.decksWindow.deckLink(e.target.id) 
+        if (app.ui.decksWindow == null) { return }
+        app.path.hsFormat = this.f
+        app.ui.deckLink(e.target.id) 
     }
 
 
@@ -220,7 +221,13 @@ class PowerWindow {
         ranks[0] = 'L'
     
         let columnTemplate = '1fr '
-        for (let i of range(0,this.maxElementsPerRank)) {columnTemplate += '4fr 1fr '}
+        //let fraction = Math.round(100/(this.maxElementsPerRank*2))
+        //let columnTemplate = 10+'% '
+        for (let i of range(0,this.maxElementsPerRank)) {
+            columnTemplate += '4fr 1fr '
+            //columnTemplate += 0.8*fraction+'% '
+            //columnTemplate += 0.2*fraction+'% '
+        }
 
         this.grid.style.gridTemplateColumns = columnTemplate
         this.grid.style.gridGap = '0.1rem'

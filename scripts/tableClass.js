@@ -517,11 +517,13 @@ class Table {
                 xaxis: {
                     type: 'log',
                     autorange: true,
+                    fixedrange: true,
                     title: 'Iteration step of simulation (logarithmically)',
                     opacity: 0.5,
                 },
                 yaxis: { 
                     range: [0,1],
+                    fixedrange: true,
                     title: 'Share of Meta',
                     opacity: 0.5,
                 },

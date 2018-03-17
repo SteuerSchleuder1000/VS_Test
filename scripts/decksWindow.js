@@ -7,9 +7,6 @@ class DecksWindow {
     constructor (callback) {
 
         this.hsFormats = hsFormats
-
-        //this.sidebar = document.querySelector('#decksWindow .content .sidebar.left .archetypeList')
-        //this.sidebarRight1 = document.querySelector('#decksWindow .content .sidebar.right .archetypeList')
         this.div = document.querySelector('#decksWindow')
         this.tab = document.querySelector('#decks.tab')
         this.chartDiv = document.querySelector('#decksWindow .content .chart')
@@ -125,10 +122,15 @@ class DecksWindow {
 
 
         for (let hsClass of hsClasses) {
-            let btn = this.createSelectionBtn(hsClass, hsClass)
-            btn.style.backgroundColor = '#454c57'
-            btn.style.color = fontColors[hsClass]
-            btn.style.backgroundColor = fontColors[hsClass]
+            //let btn = this.createSelectionBtn(hsClass, hsClass)
+            let btn = document.createElement('img')
+            btn.className = 'selectionBtn classIcon'
+            btn.innerHTML = hsClass
+            btn.id = hsClass
+            btn.src = 'Images/classIcon_'+hsClass+'.png'
+            //btn.style.color = fontColors[hsClass]
+            //btn.style.backgroundColor = fontColors[hsClass]
+            btn.style.borderColor = fontColors[hsClass]
             btn.onclick = this.buttonTrigger.bind(this)
             this.selection.buttonWrapper.appendChild(btn)
             this.selection.buttons.push(btn)
@@ -138,7 +140,7 @@ class DecksWindow {
             let btn = this.createSelectionBtn(extra,extra)
             btn.className += ' special'
             btn.style.backgroundColor = 'black'
-            btn.style.color = fontColors[extra]
+            btn.style.color = 'white' //fontColors[extra]
             btn.onclick = this.buttonTrigger.bind(this)
             this.selection.buttonWrapper.appendChild(btn)
             this.selection.buttons.push(btn)
@@ -567,10 +569,10 @@ class DecksWindow {
         if (this.hsArch == undefined) {
             this.mode = 'description'
             for (var c of hsClasses) { if (archName.indexOf(c) != -1) { this.hsClass = c; break } }
+            this.loadArchetypes(this.hsClass)
+            //this.loadDecklists(this.hsClasses)
         }
 
-        //this.loadArchetypes(this.hsClass)
-        //this.loadDecklists(this.hsArch)
         this.display(true)
     }
 

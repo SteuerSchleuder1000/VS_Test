@@ -53,15 +53,18 @@ class Decklist {
         this.decklist = document.createElement('div')
         this.decklist.className = 'decklist'
         this.decklist.id = dl.name
+
+        let rarities = ['Common','Rare','Epic','Legendary']
         let rarityDistribution = {} // common: 0, rare: 0, etc
-        for (let rarity in cardDust) { rarityDistribution[rarity] = 0}
+
+        for (let rarity of rarities) { rarityDistribution[rarity] = 0}
 
         for (let card of dl.cards) {
 
-            rarityDistribution[card.rarity] += 1
+            if (card.rarity in rarityDistribution) { rarityDistribution[card.rarity] += 1 }
 
             let c = new CardDiv(card)
-            if (!MOBILE) {
+            if (!MOBILE) { // highlighting not working on mobile
                 c.hoverDiv.onmouseover = this.window.highlight.bind(this.window)
                 c.hoverDiv.onmouseout = this.window.highlight.bind(this.window)
             }
@@ -93,7 +96,7 @@ class Decklist {
         let dustDiv = document.createElement('div')
         dustDiv.className = 'dustDiv'
         let dustInfo = document.createElement('p')
-        dustInfo.innerHTML = this.dust+ '  '
+        dustInfo.innerHTML = this.dust
         dustInfo.className = 'dustInfo'
         let dustImg = document.createElement('img')
         dustImg.src = 'Images/dust.png'
@@ -102,34 +105,47 @@ class Decklist {
         
         dustDiv.appendChild(dustInfo)
         dustDiv.appendChild(dustImg)
-        for (let rarity in cardDust) {
+
+        let paranthesisOpen = document.createElement('p')
+        paranthesisOpen.className = 'rarityInfo'
+        paranthesisOpen.innerHTML = '('
+        dustDiv.appendChild(paranthesisOpen)
+        
+        for (let rarity of ['Legendary','Epic','Rare']) {
             let p = document.createElement('p')
-            p.className = 'dustInfo'
+            p.className = 'rarityInfo'
             p.innerHTML = rarityDistribution[rarity]
 
             let gem = document.createElement('img')
             gem.className = 'dustImg'
-            gem.src = 'Images/dust.png' // replace with rarity gems
+            gem.src = 'Images/gem_'+rarity+'.png'
 
             dustDiv.appendChild(p)
             dustDiv.appendChild(gem)            
         }
 
+        let paranthesisClose = document.createElement('p')
+        paranthesisClose.className = 'rarityInfo'
+        paranthesisClose.innerHTML = ')'
+        dustDiv.appendChild(paranthesisClose)
+
         this.deckinfo.appendChild(dustDiv)
 
-        let cardTypes = document.createElement('p')
-        cardTypes.className = 'cardtypes'
+        let cardTypesDiv = document.createElement('p')
+        cardTypesDiv.className = 'cardtypes'
         let text = ''
-        for (let key in dl.cardTypes) {
+        let cardTypes = ['Minion','Spell','Weapon','Hero']
+
+        for (let key of cardTypes) {
             let num = dl.cardTypes[key]
             text += num
-            text += (num >= 10) ? ' ':'  '
+            text += (num >= 10) ? ' ':'&#160;&#160;&#160'
             text += key
             text += (num > 1 || num == 0) ? 's<br>':'<br>'
         }
 
-        cardTypes.innerHTML = text
-        this.deckinfo.appendChild(cardTypes)
+        cardTypesDiv.innerHTML = text
+        this.deckinfo.appendChild(cardTypesDiv)
 
         // var winrate = document.createElement('p')
         // winrate.className = 'winrate'

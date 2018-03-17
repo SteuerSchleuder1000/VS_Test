@@ -18,25 +18,32 @@ html(lang='en')
       #overlay
         p.overlayText
       nav.navbar
-        #mobileFolder.option-folder
-          button#mobileBtn.folder-toggle.fa.fa-bars
-          .dropdown.hidden
-            button#ladder.mobileBtn.optionBtn.folderBtn Overview
-            button#power.mobileBtn.optionBtn.folderBtn Tier List
-            button#table.mobileBtn.optionBtn.folderBtn Matchups
-            button#decks.mobileBtn.optionBtn.folderBtn Decks
-            button#info.mobileBtn.optionBtn.folderBtn Info
+
+        //#mobileFolder.option-folder
+        //  button#mobileBtn.folder-toggle.fa.fa-bars
+        //  .dropdown.hidden
+        //    button#ladder.mobileBtn.optionBtn.folderBtn Overview
+        //    button#power.mobileBtn.optionBtn.folderBtn Tier List
+        //    button#table.mobileBtn.optionBtn.folderBtn Matchups
+        //    button#decks.mobileBtn.optionBtn.folderBtn Decks
+        //    button#info.mobileBtn.optionBtn.folderBtn Info
+        .mobileTabs
+          button.tab Tab Title
         .tabs
-          button#ladder.tab Overview
+          button#ladder.tab.highlighted Overview
           button#power.tab Tier List
           button#table.tab Matchups
           button#decks.tab Decks
           button#info.tab info
+        #updateTimeDiv.tooltip
+          p#updateTime
+          span.tooltipText Last updated
         #vsLogoDiv
           img(src="Images/vsLiveLogo.png").logo
-        .refreshArrow.fa.fa-refresh
+        //.refreshArrow.fa.fa-refresh
       .content-wrapper
         #loader
+
         #ladderWindow.tabWindow
           .content-header
             .ftrOptions.optionBar
@@ -48,7 +55,7 @@ html(lang='en')
                 .dropdown.hidden
               #rankFolder.option-folder
                 button#rankBtn.folder-toggle All Ranks
-                .dropdown#rankDropdown.hidden
+                .dropdown#rankDropdown.hidden              
             .classDeckOptions.optionBar
               button#classes.optionBtn Classes
               button#decks.optionBtn Decks
@@ -60,8 +67,8 @@ html(lang='en')
                 button#bar.optionBtn.folderBtn.fa.fa-bar-chart
                 button#line.optionBtn.folderBtn.fa.fa-line-chart
                 button#pie.optionBtn.folderBtn.fa.fa-pie-chart
-                button#number.optionBtn.folderBtn.fa.fa-percent
-                button#timeline.optionBtn.folderBtn.fa.fa-clock-o
+                button#number.optionBtn.folderBtn.fa.fa-th
+                button#timeline.optionBtn.folderBtn.fa.fa-hourglass
             .graphOptions.optionBar
               button#bar.optionBtn.fa.fa-bar-chart.tooltip
                 span.tooltipText Show Bar Chart
@@ -69,12 +76,13 @@ html(lang='en')
                   span.tooltipText Show Line Chart
               button#pie.optionBtn.fa.fa-pie-chart.tooltip
                   span.tooltipText Show Pie Chart
-              button#number.optionBtn.fa.fa-percent.tooltip
-                  span.tooltipText Show Numbers
+              button#number.optionBtn.fa.fa-th.tooltip
+                  span.tooltipText Show Table
               button#map.optionBtn.fa.fa-map.tooltip
                   span.tooltipText Show Power Map
-              button#timeline.optionBtn.fa.fa-clock-o.tooltip
+              button#timeline.optionBtn.fa.fa-hourglass.tooltip
                   span.tooltipText Show Timeline
+            .shadow
           .overlay
             p.overlayText
           .content
@@ -83,7 +91,7 @@ html(lang='en')
             p.graphLabel
             #chart1.chart
             .chart-footer
-          .content-footer
+          .content-footer Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-2018. All rights reserved.
           
         #powerWindow.tabWindow
           .content-header
@@ -93,13 +101,14 @@ html(lang='en')
             .dispOptions.optionBar
               button#brackets.optionBtn Tier Lists
               button#ranks.optionBtn Ranks
+            .shadow
           .overlay
             p.overlayText
           .content
             .question.fa.fa-question-circle
             #powerGrid.chart
             .chart-footer
-          .content-footer
+          .content-footer Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-2018. All rights reserved.
           
             
         #tableWindow.tabWindow
@@ -114,7 +123,7 @@ html(lang='en')
               #rankFolder.option-folder
                 button#ranksBtn.folder-toggle All Ranks
                 .dropdown.hidden
-              p.nrGames
+              p.nrGames              
             .graphOptions.optionBar
               p Sort 
               #sortFolder.option-folder
@@ -124,18 +133,23 @@ html(lang='en')
                 span.tooltipText Change Color
               button#showNumbers.optionBtn.fa.fa-hashtag.tooltip
                 span.tooltipText Show Numbers
+            .shadow
           .overlay
             p.overlayText
           .content
-            //p.graphTitle Versus
             .question.fa.fa-question-circle
             #chart2.chart
             .chart-footer
               //.colorTheme.chartFooterBtn
               //  button.changeColorBtn Change Colors
-              //.equilibrium
-              //  button.equilibriumBtn Equilibrium
-          .content-footer
+              //.equilibrium.chartFooterBtn
+              //  button.equilibriumBtn Simulation
+              //    .fa.fa-rocket
+              //.download.chartFooterBtn
+              //  button.downloadBtn Download Table
+              //    .fa.fa-cloud-download
+          .content-footer Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-2018. All rights reserved.
+
         #decksWindow.tabWindow
           .content-header
             .ftrOptions.optionBar
@@ -144,9 +158,15 @@ html(lang='en')
                 .dropdown.hidden
                   button#Standard.optionBtn.folderBtn Standard
                   button#Wild.optionBtn.folderBtn Wild
+              button#description.optionBtn Text
+              button#decklists.optionBtn Decks
+              button#dustWr.optionBtn Dust
               #classFolder.option-folder
                 button#classBtn.folder-toggle Druid
                 .dropdown.hidden
+                  button.optionBtn.folderBtn Classes
+                  button.optionBtn.folderBtn Meta
+                  button.optionBtn.folderBtn Special
                   button#Druid.optionBtn.folderBtn Druid 
                   button#Hunter.optionBtn.folderBtn Hunter 
                   button#Mage.optionBtn.folderBtn Mage
@@ -157,49 +177,61 @@ html(lang='en')
                   button#Warlock.optionBtn.folderBtn Warlock
                   button#Warrior.optionBtn.folderBtn Warrior
             .displayOptions.optionBar
-              button#description.optionBtn Description
-              button#decklists.optionBtn Deck Lists
+              button#info.optionBtn Info
+              button#compare.optionBtn Compare
+            .shadow
           .overlay
             p.overlayText
           .content
             .question.fa.fa-question-circle
-            .archetypes
-              p.title Archetypes
-              .archetypeList
-            .descriptionBox
-              .description
-            .decklists 
-          .content-footer
+            .content-left
+              .selectionWrapper
+                .buttonWrapper
+              .sidebar.left
+            .content-middle
+              .descriptionBox
+                .description
+              .decklists
+              #chart3.chart
+          .content-footer Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-2018. All rights reserved.
             
           
         #infoWindow.tabWindow
           .content-header
+            .graphOptions.optionBar
+              button#info.optionBtn.fa.fa-info.tooltip
+                span.tooltipText Information
+              button#twitter.optionBtn.fa.fa-twitter.tooltip
+                  span.tooltipText Twitter Feed
+            .shadow
           .content
             .infoText
-            .login
-              p Test login in with a VS account (vsProUser@vs.com - pw12345):
-              input#emailInput(placeholder='Email')
-              input#passwordInput(placeholder='Password')
-              button#loginBtn Login
-              button#logOutBtn.hidden Logout
-              button#signUpBtn Sign Up
-              p#loginErrorMsg
-          .content-footer
+            .twitterDiv
+              a( class='twitter-timeline' href='https://twitter.com/ViciousHS?ref_src=twsrc%5Etfw>Tweets by ViciousHS' )
+            //  p Test login in with a VS account (vsProUser@vs.com - pw12345):
+            //  input#emailInput(placeholder='Email')
+            //  input#passwordInput(placeholder='Password')
+            //  button#loginBtn Login
+            //  button#logOutBtn.hidden Logout
+            //  button#signUpBtn Sign Up
+            //  p#loginErrorMsg
+          .content-footer Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-2018. All rights reserved.
 
-    //- script(src='scripts/app.js')
-    //- script(src='scripts/build_premium.js')
-    //- script(src='scripts/parameters.js')
-    //- script(src='scripts/script.js')
-    //- script(src='scripts/ui.js')
-    //- script(src='scripts/ladderClass.js')
-    //- script(src='scripts/historyClass.js')
-    //- script(src='scripts/ladderWindow.js')
-    //- script(src='scripts/tableClass.js')
-    //- script(src='scripts/tableWindow.js')
-    //- script(src='scripts/powerWindow.js')
-    //- script(src='scripts/decksWindow.js')
-    //- script(src='scripts/decklistClass.js')
-    //- script(src='scripts/infowWindow.js')
+    script(src='https://platform.twitter.com/widgets.js', async, charset='utf-8')
+    script(src='scripts/build_basic.js')
+    script(src='scripts/app.js')
+    script(src='scripts/parameters.js')
+    script(src='scripts/script.js')
+    script(src='scripts/ui.js')
+    script(src='scripts/ladderClass.js')
+    script(src='scripts/historyClass.js')
+    script(src='scripts/ladderWindow.js')
+    script(src='scripts/tableClass.js')
+    script(src='scripts/tableWindow.js')
+    script(src='scripts/powerWindow.js')
+    script(src='scripts/decksWindow.js')
+    script(src='scripts/decklistClass.js')
+    script(src='scripts/infoWindow.js')
 
-    //- script(src='bundle_basic-dist.js')
+    //- script(src='bundle-dist.js')
 

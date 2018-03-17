@@ -449,7 +449,6 @@ class LadderWindow {
         legendDiv.onclick = function(e) { 
             if (app.ui.decksWindow == null) { return }
             app.path.hsFormat = this.f
-            //app.ui.ladderWindow.display(false)
             app.ui.deckLink(e.target.id);  
         }
 
