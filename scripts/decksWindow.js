@@ -129,7 +129,7 @@ class DecksWindow {
             btn.id = hsClass
             btn.src = 'Images/classIcon_'+hsClass+'.png'
             //btn.style.color = fontColors[hsClass]
-            //btn.style.backgroundColor = fontColors[hsClass]
+            btn.style.backgroundColor = fontColors[hsClass]
             btn.style.borderColor = fontColors[hsClass]
             btn.onclick = this.buttonTrigger.bind(this)
             this.selection.buttonWrapper.appendChild(btn)
@@ -595,8 +595,12 @@ class DecksWindow {
     plotDescriptions() {
         if (hsClasses.indexOf(this.hsClass) == -1) { this.hsClass = hsClasses[0] }
         // if hsclass == meta -> load/ link meta report
-        var d = this.data[this.f][this.hsClass]
-        this.description.innerHTML = '<p class="title">'+this.hsClass+'</p><p class="text">'+d.text+'</p>'
+        let d = this.data[this.f][this.hsClass]
+        let title = '<p class="title">'+this.hsClass+'</p>'
+        let drLink = '<a class="drLink" target="_blank" href='+'https://www.vicioussyndicate.com/vs-data-reaper-report-84/'+'>Meta Report #84</a>'
+        let text = '<p class="text">'+d.text+'</p>'
+
+        this.description.innerHTML = drLink + title + text
     }
 
     
@@ -621,51 +625,51 @@ class DecksWindow {
     }
 
 
-    plotDecklistsMatchups(hsArch) { // load deck matchups in right sidebar
-        let f = this.f
-        let wr = hsArch.wr
-        let top = 3
-        let topArch = []
-        let botArch = []
-        this.sidebarRightTop.removeBtn()
-        this.sidebarRightBot.removeBtn()
+    // plotDecklistsMatchups(hsArch) { // load deck matchups in right sidebar
+    //     let f = this.f
+    //     let wr = hsArch.wr
+    //     let top = 3
+    //     let topArch = []
+    //     let botArch = []
+    //     this.sidebarRightTop.removeBtn()
+    //     this.sidebarRightBot.removeBtn()
 
-        if (wr > 0) { // normal
-            let table = this.mu[f].table
-            let archNames = this.mu[f].archNames
-            let idx = archNames.indexOf(hsArch.name)
-            if (idx == -1) { hsArch.wr = 0; this.plotDecklistsMatchups(hsArch); return }
+    //     if (wr > 0) { // normal
+    //         let table = this.mu[f].table
+    //         let archNames = this.mu[f].archNames
+    //         let idx = archNames.indexOf(hsArch.name)
+    //         if (idx == -1) { hsArch.wr = 0; this.plotDecklistsMatchups(hsArch); return }
 
-            let row = table[idx].slice()
-            row.sort()
-            top = Math.min(top,row.length)
+    //         let row = table[idx].slice()
+    //         row.sort()
+    //         top = Math.min(top,row.length)
 
-            for (let t of range(0,top)) {
-                let mu = row[row.length-1-t]
-                let idx2 = table[idx].indexOf(mu)
-                topArch.push(archNames[idx2])
+    //         for (let t of range(0,top)) {
+    //             let mu = row[row.length-1-t]
+    //             let idx2 = table[idx].indexOf(mu)
+    //             topArch.push(archNames[idx2])
 
-                mu = row[t]
-                idx2 = table[idx].indexOf(mu)
-                botArch.push(archNames[idx2])
-            }
+    //             mu = row[t]
+    //             idx2 = table[idx].indexOf(mu)
+    //             botArch.push(archNames[idx2])
+    //         }
 
-            // add to sidebar
-            for (let archName of topArch) {
-                if (archName == null) { continue }
-                let arch = this.findArch(archName)
-                this.sidebarRightTop.addArchBtn(arch)
-            }
+    //         // add to sidebar
+    //         for (let archName of topArch) {
+    //             if (archName == null) { continue }
+    //             let arch = this.findArch(archName)
+    //             this.sidebarRightTop.addArchBtn(arch)
+    //         }
 
-            for (let archName of botArch) {
-                if (archName == null) { continue }
-                let arch = this.findArch(archName)
-                this.sidebarRightBot.addArchBtn(arch)
-            }
-        } else {
-            // check raw data for more
-        }
-    }
+    //         for (let archName of botArch) {
+    //             if (archName == null) { continue }
+    //             let arch = this.findArch(archName)
+    //             this.sidebarRightBot.addArchBtn(arch)
+    //         }
+    //     } else {
+    //         // check raw data for more
+    //     }
+    // }
 
     highlight(e) {
 

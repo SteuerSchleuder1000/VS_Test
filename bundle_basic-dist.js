@@ -206,13 +206,13 @@ var app, _createClass = function() {
         var c = !0, u = !1, y = void 0;
         try {
             for (var f, p = e.cards[Symbol.iterator](); !(c = (f = p.next()).done); c = !0) {
-                var v = f.value;
-                v.rarity in s && (s[v.rarity] += 1);
-                var m = new CardDiv(v);
-                MOBILE || (m.hoverDiv.onmouseover = this.window.highlight.bind(this.window), m.hoverDiv.onmouseout = this.window.highlight.bind(this.window)), 
-                this.cards.push(m), this.dust += m.dust * m.quantity;
-                var b = Math.min(m.cost, 10);
-                this.manaBin[b] += parseInt(m.quantity), this.decklist.appendChild(m.div);
+                var m = f.value;
+                m.rarity in s && (s[m.rarity] += parseInt(m.quantity));
+                var v = new CardDiv(m);
+                MOBILE || (v.hoverDiv.onmouseover = this.window.highlight.bind(this.window), v.hoverDiv.onmouseout = this.window.highlight.bind(this.window)), 
+                this.cards.push(v), this.dust += v.dust * v.quantity;
+                var b = Math.min(v.cost, 10);
+                this.manaBin[b] += parseInt(v.quantity), this.decklist.appendChild(v.div);
             }
         } catch (t) {
             u = !0, y = t;
@@ -534,19 +534,19 @@ var app, _createClass = function() {
                     wr: {},
                     fullyLoaded: !1
                 };
-                var f = !0, p = !1, v = void 0;
+                var f = !0, p = !1, m = void 0;
                 try {
-                    for (var m, b = hsClasses[Symbol.iterator](); !(f = (m = b.next()).done); f = !0) {
-                        var k = m.value;
+                    for (var v, b = hsClasses[Symbol.iterator](); !(f = (v = b.next()).done); f = !0) {
+                        var k = v.value;
                         this.data[y][k] = {}, this.data[y][k].archetypes = [], this.data[y][k].text = "";
                     }
                 } catch (t) {
-                    p = !0, v = t;
+                    p = !0, m = t;
                 } finally {
                     try {
                         !f && b.return && b.return();
                     } finally {
-                        if (p) throw v;
+                        if (p) throw m;
                     }
                 }
             }
@@ -597,8 +597,8 @@ var app, _createClass = function() {
                 for (var n, o = hsClasses[Symbol.iterator](); !(i = (n = o.next()).done); i = !0) {
                     var l = n.value, h = document.createElement("img");
                     h.className = "selectionBtn classIcon", h.innerHTML = l, h.id = l, h.src = "Images/classIcon_" + l + ".png", 
-                    h.style.borderColor = a[l], h.onclick = this.buttonTrigger.bind(this), this.selection.buttonWrapper.appendChild(h), 
-                    this.selection.buttons.push(h);
+                    h.style.backgroundColor = a[l], h.style.borderColor = a[l], h.onclick = this.buttonTrigger.bind(this), 
+                    this.selection.buttonWrapper.appendChild(h), this.selection.buttons.push(h);
                 }
             } catch (t) {
                 r = !0, s = t;
@@ -795,15 +795,15 @@ var app, _createClass = function() {
                                 var f = u.value;
                                 if (-1 == e.indexOf(f.name)) {
                                     e.push(f.name);
-                                    var p = !0, v = !0, m = !1, b = !0;
-                                    1 == f.quantity && (v = !1);
+                                    var p = !0, m = !0, v = !1, b = !0;
+                                    1 == f.quantity && (m = !1);
                                     var k = !0, w = !1, g = void 0;
                                     try {
                                         for (var x, L = range(0, a)[Symbol.iterator](); !(k = (x = L.next()).done); k = !0) {
                                             var C = x.value;
                                             if (l != C) {
                                                 var T = this.decklists[C].findCard(f.name);
-                                                0 == T && (v = !1, p = !1), 1 == T && (v = !1, b = !1), T >= 2 && (b = !1);
+                                                0 == T && (m = !1, p = !1), 1 == T && (m = !1, b = !1), T >= 2 && (b = !1);
                                             }
                                         }
                                     } catch (t) {
@@ -815,9 +815,9 @@ var app, _createClass = function() {
                                             if (w) throw g;
                                         }
                                     }
-                                    b || p || (m = !0);
+                                    b || p || (v = !0);
                                     var S = "";
-                                    p && (S = "core_x1"), v && (S = "core_x2"), m && (S = "some"), b && (S = "unique");
+                                    p && (S = "core_x1"), m && (S = "core_x2"), v && (S = "some"), b && (S = "unique");
                                     var B = !0, D = !1, W = void 0;
                                     try {
                                         for (var M, _ = this.decklists[Symbol.iterator](); !(B = (M = _.next()).done); B = !0) {
@@ -1015,11 +1015,11 @@ var app, _createClass = function() {
                                 fr: y
                             };
                             this.archetypes[r].push(p), this.data[r][d].archetypes.push(p);
-                            var v = this.data[r][d].archetypes.length - 1, m = i[d].archetypes[c], b = Object.keys(m), k = !0, w = !1, g = void 0;
+                            var m = this.data[r][d].archetypes.length - 1, v = i[d].archetypes[c], b = Object.keys(v), k = !0, w = !1, g = void 0;
                             try {
                                 for (var x, L = b[Symbol.iterator](); !(k = (x = L.next()).done); k = !0) {
-                                    var C = x.value, T = new Decklist(m[C], d, this);
-                                    this.data[r][d].archetypes[v].decklists.push(T);
+                                    var C = x.value, T = new Decklist(v[C], d, this);
+                                    this.data[r][d].archetypes[m].decklists.push(T);
                                 }
                             } catch (t) {
                                 w = !0, g = t;
@@ -1125,8 +1125,8 @@ var app, _createClass = function() {
         key: "plotDescriptions",
         value: function() {
             -1 == hsClasses.indexOf(this.hsClass) && (this.hsClass = hsClasses[0]);
-            var t = this.data[this.f][this.hsClass];
-            this.description.innerHTML = '<p class="title">' + this.hsClass + '</p><p class="text">' + t.text + "</p>";
+            var t = this.data[this.f][this.hsClass], e = '<p class="title">' + this.hsClass + "</p>", a = '<p class="text">' + t.text + "</p>";
+            this.description.innerHTML = '<a class="drLink" target="_blank" href=https://www.vicioussyndicate.com/vs-data-reaper-report-84/>Meta Report #84</a>' + e + a;
         }
     }, {
         key: "plotDecklists",
@@ -1178,68 +1178,6 @@ var app, _createClass = function() {
                     !e && s.return && s.return();
                 } finally {
                     if (a) throw i;
-                }
-            }
-        }
-    }, {
-        key: "plotDecklistsMatchups",
-        value: function(t) {
-            var e = this.f, a = t.wr, i = 3, r = [], s = [];
-            if (this.sidebarRightTop.removeBtn(), this.sidebarRightBot.removeBtn(), a > 0) {
-                var n = this.mu[e].table, o = this.mu[e].archNames, l = o.indexOf(t.name);
-                if (-1 == l) return t.wr = 0, void this.plotDecklistsMatchups(t);
-                var h = n[l].slice();
-                h.sort(), i = Math.min(i, h.length);
-                var d = !0, c = !1, u = void 0;
-                try {
-                    for (var y, f = range(0, i)[Symbol.iterator](); !(d = (y = f.next()).done); d = !0) {
-                        var p = y.value, v = h[h.length - 1 - p], m = n[l].indexOf(v);
-                        r.push(o[m]), v = h[p], m = n[l].indexOf(v), s.push(o[m]);
-                    }
-                } catch (t) {
-                    c = !0, u = t;
-                } finally {
-                    try {
-                        !d && f.return && f.return();
-                    } finally {
-                        if (c) throw u;
-                    }
-                }
-                var b = !0, k = !1, w = void 0;
-                try {
-                    for (var g, x = r[Symbol.iterator](); !(b = (g = x.next()).done); b = !0) {
-                        var L = g.value;
-                        if (null != L) {
-                            var C = this.findArch(L);
-                            this.sidebarRightTop.addArchBtn(C);
-                        }
-                    }
-                } catch (t) {
-                    k = !0, w = t;
-                } finally {
-                    try {
-                        !b && x.return && x.return();
-                    } finally {
-                        if (k) throw w;
-                    }
-                }
-                var T = !0, S = !1, B = void 0;
-                try {
-                    for (var D, W = s[Symbol.iterator](); !(T = (D = W.next()).done); T = !0) {
-                        var M = D.value;
-                        if (null != M) {
-                            var _ = this.findArch(M);
-                            this.sidebarRightBot.addArchBtn(_);
-                        }
-                    }
-                } catch (t) {
-                    S = !0, B = t;
-                } finally {
-                    try {
-                        !T && W.return && W.return();
-                    } finally {
-                        if (S) throw B;
-                    }
                 }
             }
         }
@@ -1465,7 +1403,7 @@ var app, _createClass = function() {
             this.annotations = [];
             for (var f = l[l.length - 1].data.slice(), p = i; p < r && p < f.length; p++) {
                 y += f[p];
-                var v = {
+                var m = {
                     x: p,
                     y: .05,
                     xref: "x",
@@ -1478,13 +1416,13 @@ var app, _createClass = function() {
                     },
                     opacity: .8
                 };
-                this.annotations.push(v);
+                this.annotations.push(m);
             }
-            var m = l.slice().sort(function(t, e) {
+            var v = l.slice().sort(function(t, e) {
                 return t.avg > e.avg ? -1 : t.avg < e.avg ? 1 : 0;
             });
             for (p = 0; p < this.top; p++) {
-                var b, k = m[p].name;
+                var b, k = v[p].name;
                 b = "classes" == n ? {
                     color: hsColors[k],
                     fontColor: hsFontColors[k]
@@ -1493,11 +1431,11 @@ var app, _createClass = function() {
                     color: b.color,
                     fontColor: b.fontColor
                 });
-                var w = "lastHours" == e ? this.smoothData(m[p].data) : m[p].data.slice();
+                var w = "lastHours" == e ? this.smoothData(v[p].data) : v[p].data.slice();
                 w = w.slice(i, r);
                 for (var g = [], x = 0; x < o.length; x++) {
                     var L = x > 0 ? a + "s" : a;
-                    g.push(m[p].name + " (" + (100 * w[x]).toFixed(1) + "% )<br>" + o[x] + " " + L + " ago"), 
+                    g.push(v[p].name + " (" + (100 * w[x]).toFixed(1) + "% )<br>" + o[x] + " " + L + " ago"), 
                     w[x] > h && (h = w[x]);
                 }
                 c.push({
@@ -1590,7 +1528,7 @@ var app, _createClass = function() {
     function t(e) {
         _classCallCheck(this, t), this.div = document.querySelector("#infoWindow"), this.tab = document.querySelector("#info.tab"), 
         this.infoText = document.querySelector("#infoWindow .content .infoText"), this.twitterFeed = document.querySelector("#infoWindow .content .twitterDiv"), 
-        this.mode = "info", this.text = '\n                Greetings and thank you for checking out the VS Live!<br><br>\n\n                    <b>Update 2.0:</b><br><br>\n\n                    - New Power Score plot in the overview tab.<br>\n                    - You can now change the color scheme in the Matchups tab.<br>\n                    - Added meta simulation tool for Premium users in the Matchups tab.<br>\n                    - Reworked Deck tab. Includes a deck comparison feature and a dust vs winrate plot.<br>\n                    - Embeded the vicious syndicate twitter feed into the info tab.<br>\n                    - App now loads less data on first load.<br>\n                    - App now updates dynamically. Last update time shown in the top right corner.<br>\n                    - App now has a somewhat workable mobile version.<br>\n                    - Udates to lots of interface elements (new icons/ text/ colors etc.)<br>\n                    - Fixes to bugs and "features".<br><br>\n\n                   To give feedback simply click on the discord link below:<br><br>\n                   \n                <a href=' + DISCORDLINK + '\n                   target="_blank"><img class=\'discordLogo\' src="Images/discordLogo.png"></a><br><br>\n                ', 
+        this.mode = "info", this.text = '\n                Greetings and thank you for checking out the VS Live!<br><br>\n\n                    <b>Update 2.0:</b><br><br>\n\n                    - New Power Score plot in the overview tab.<br>\n                    - You can now change the color scheme in the Matchups tab.<br>\n                    - Added meta simulation tool for Premium users in the Matchups tab.<br>\n                    - Reworked Deck tab. Includes a deck comparison feature and a dust vs winrate plot.<br>\n                    - Embeded the vicious syndicate twitter feed into the info tab.<br>\n                    - App now loads less data on first load.<br>\n                    - App now updates dynamically. Last update time shown in the top right corner.<br>\n                    - Udates to lots of interface elements (new icons/ text/ colors etc.)<br>\n                    - Fixes to bugs and "features".<br><br>\n\n                   To give feedback simply click on the discord link below:<br><br>\n                   \n                <a href=' + DISCORDLINK + '\n                   target="_blank"><img class=\'discordLogo\' src="Images/discordLogo.png"></a><br><br>\n                ', 
         this.infoText.innerHTML = this.text, this.setupUI();
     }
     return _createClass(t, [ {
@@ -1708,11 +1646,11 @@ var app, _createClass = function() {
         var c = !0, u = !1, y = void 0;
         try {
             for (var f, p = this.window.ranks[Symbol.iterator](); !(c = (f = p.next()).done); c = !0) {
-                var v = f.value;
-                this.traces.map[v] = null, this.rankBrackets.push({
-                    name: v,
-                    start: rankRange[v][0],
-                    end: rankRange[v][1]
+                var m = f.value;
+                this.traces.map[m] = null, this.rankBrackets.push({
+                    name: m,
+                    start: rankRange[m][0],
+                    end: rankRange[m][1]
                 });
             }
         } catch (t) {
@@ -1725,9 +1663,9 @@ var app, _createClass = function() {
             }
         }
         this.bracket = this.rankBrackets[0];
-        var m = !0, b = !1, k = void 0;
+        var v = !0, b = !1, k = void 0;
         try {
-            for (var w, g = this.rankBrackets[Symbol.iterator](); !(m = (w = g.next()).done); m = !0) {
+            for (var w, g = this.rankBrackets[Symbol.iterator](); !(v = (w = g.next()).done); v = !0) {
                 var x = w.value;
                 this.totGamesBrackets[x.name] = 0;
                 var L = [], C = !0, T = !1, S = void 0;
@@ -1783,7 +1721,7 @@ var app, _createClass = function() {
             b = !0, k = t;
         } finally {
             try {
-                !m && g.return && g.return();
+                !v && g.return && g.return();
             } finally {
                 if (b) throw k;
             }
@@ -1891,10 +1829,10 @@ var app, _createClass = function() {
             };
             this.archetypes.push(yt);
         }
-        var ft = !0, pt = !1, vt = void 0;
+        var ft = !0, pt = !1, mt = void 0;
         try {
-            for (var mt, bt = range(0, 9)[Symbol.iterator](); !(ft = (mt = bt.next()).done); ft = !0) {
-                E = mt.value;
+            for (var vt, bt = range(0, 9)[Symbol.iterator](); !(ft = (vt = bt.next()).done); ft = !0) {
+                E = vt.value;
                 var kt = hsClasses[E], wt = [], gt = [], xt = 0, Lt = !0, Ct = !1, Tt = void 0;
                 try {
                     for (var St, Bt = range(0, hsRanks)[Symbol.iterator](); !(Lt = (St = Bt.next()).done); Lt = !0) {
@@ -2020,12 +1958,12 @@ var app, _createClass = function() {
                 this.traces.bar.classes.push(re), this.traces.line.classes.push(se);
             }
         } catch (t) {
-            pt = !0, vt = t;
+            pt = !0, mt = t;
         } finally {
             try {
                 !ft && bt.return && bt.return();
             } finally {
-                if (pt) throw vt;
+                if (pt) throw mt;
             }
         }
         var ne = function(t, e) {
@@ -2146,9 +2084,9 @@ var app, _createClass = function() {
                 for (var d, c = this.archetypes[Symbol.iterator](); !(o = (d = c.next()).done); o = !0) {
                     var u = d.value, y = i.indexOf(u.name);
                     if (-1 != y) {
-                        var f = 0, p = 0, v = !0, m = !1, b = void 0;
+                        var f = 0, p = 0, m = !0, v = !1, b = void 0;
                         try {
-                            for (var k, w = r[Symbol.iterator](); !(v = (k = w.next()).done); v = !0) {
+                            for (var k, w = r[Symbol.iterator](); !(m = (k = w.next()).done); m = !0) {
                                 var g = k.value, x = i.indexOf(g.name);
                                 if (-1 != x) {
                                     var L = a[y][x], C = g.fr_brackets[t];
@@ -2156,12 +2094,12 @@ var app, _createClass = function() {
                                 }
                             }
                         } catch (t) {
-                            m = !0, b = t;
+                            v = !0, b = t;
                         } finally {
                             try {
-                                !v && w.return && w.return();
+                                !m && w.return && w.return();
                             } finally {
-                                if (m) throw b;
+                                if (v) throw b;
                             }
                         }
                         var T = u.fr_brackets[t];
@@ -2219,8 +2157,8 @@ var app, _createClass = function() {
             a.id = "numberTable";
             var i = document.createElement("tr");
             this.download[t] = [ [] ];
-            (u = document.createElement("th")).className = "pivot", u.innerHTML = "Rank ->", 
-            i.appendChild(u), this.download[t] += "Rank%2C";
+            (u = document.createElement("th")).className = "pivot", u.innerHTML = "Rank &#10148;", 
+            u.style.textAlign = "right", u.style.color = "#0000008a", i.appendChild(u), this.download[t] += "Rank%2C";
             for (var r = hsRanks - 1; r >= 0; r--) {
                 (u = document.createElement("th")).innerHTML = r > 0 ? r : "L", i.appendChild(u), 
                 this.download[t] += r > 0 ? r : "L", this.download[t] += "%2C";
@@ -2449,10 +2387,10 @@ var app, _createClass = function() {
                     if (h) throw d;
                 }
             }
-            var f = !0, p = !1, v = void 0;
+            var f = !0, p = !1, m = void 0;
             try {
-                for (var m, b = this.hsTimes[Symbol.iterator](); !(f = (m = b.next()).done); f = !0) {
-                    var k = m.value;
+                for (var v, b = this.hsTimes[Symbol.iterator](); !(f = (v = b.next()).done); f = !0) {
+                    var k = v.value;
                     (T = document.createElement("button")).className = "optionBtn folderBtn", T.innerHTML = btnIdToText[k], 
                     T.id = k;
                     T.onclick = function(t) {
@@ -2460,12 +2398,12 @@ var app, _createClass = function() {
                     }.bind(this), this.dropdownFolders.time.appendChild(T);
                 }
             } catch (t) {
-                p = !0, v = t;
+                p = !0, m = t;
             } finally {
                 try {
                     !f && b.return && b.return();
                 } finally {
-                    if (p) throw v;
+                    if (p) throw m;
                 }
             }
             var w = !0, g = !1, x = void 0;
@@ -2674,7 +2612,7 @@ var app, _createClass = function() {
             btnIdToText[this.r]), a = this.data[this.f][this.t], i = "<span style='font-size: 80%'> ( " + ("pie" != this.plotType ? a.totGames : a.totGamesBrackets[this.r]).toLocaleString() + " games )</span>";
             switch (this.plotType) {
               case "bar":
-                this.graphTitle.innerHTML = "Class Frequency vs Ranks" + i, this.graphLabel.innerHTML = "Ranks >";
+                this.graphTitle.innerHTML = "Class Frequency vs Ranks" + i, this.graphLabel.innerHTML = "Ranks &#10148;";
                 break;
 
               case "zoom":
@@ -2682,7 +2620,7 @@ var app, _createClass = function() {
                 break;
 
               case "line":
-                this.graphTitle.innerHTML = t + " Frequency vs Ranks" + i, this.graphLabel.innerHTML = "Ranks >";
+                this.graphTitle.innerHTML = t + " Frequency vs Ranks" + i, this.graphLabel.innerHTML = "Ranks &#10148;";
                 break;
 
               case "pie":
@@ -2837,7 +2775,7 @@ var app, _createClass = function() {
                     b: 50,
                     t: 0
                 } : {
-                    l: 70,
+                    l: 75,
                     r: 20,
                     b: 30,
                     t: 0
@@ -3122,14 +3060,14 @@ var app, _createClass = function() {
         } ];
         var u = !0, y = !1, f = void 0;
         try {
-            for (var p, v = hsFormats[Symbol.iterator](); !(u = (p = v.next()).done); u = !0) {
-                var m = p.value;
-                this.bracketData[m] = {};
+            for (var p, m = hsFormats[Symbol.iterator](); !(u = (p = m.next()).done); u = !0) {
+                var v = p.value;
+                this.bracketData[v] = {};
                 var b = !0, k = !1, w = void 0;
                 try {
                     for (var g, x = this.rankBrackets[Symbol.iterator](); !(b = (g = x.next()).done); b = !0) {
                         var L = g.value;
-                        L.games[m] = 0, this.bracketData[m][L.name] = [];
+                        L.games[v] = 0, this.bracketData[v][L.name] = [];
                     }
                 } catch (t) {
                     k = !0, w = t;
@@ -3145,7 +3083,7 @@ var app, _createClass = function() {
             y = !0, f = t;
         } finally {
             try {
-                !u && v.return && v.return();
+                !u && m.return && m.return();
             } finally {
                 if (y) throw f;
             }
@@ -3203,15 +3141,15 @@ var app, _createClass = function() {
                 for (var d, c = range(0, hsRanks)[Symbol.iterator](); !(o = (d = c.next()).done); o = !0) {
                     var u = d.value, y = !0, f = !1, p = void 0;
                     try {
-                        for (var v, m = this.rankBrackets[Symbol.iterator](); !(y = (v = m.next()).done); y = !0) {
-                            var b = v.value;
+                        for (var m, v = this.rankBrackets[Symbol.iterator](); !(y = (m = v.next()).done); y = !0) {
+                            var b = m.value;
                             b.start <= u && b.end >= u && (b.games[t] += this.rankData.rankSums[t][u]);
                         }
                     } catch (t) {
                         f = !0, p = t;
                     } finally {
                         try {
-                            !y && m.return && m.return();
+                            !y && v.return && v.return();
                         } finally {
                             if (f) throw p;
                         }
@@ -3402,8 +3340,8 @@ var app, _createClass = function() {
                     (f = document.createElement("div")).className = "blank", this.grid.appendChild(f), 
                     this.grid.appendChild(document.createElement("div"));
                 } else for (h = 0; h < this.maxElementsPerRank; h++) {
-                    var d = this.rankData[t][l][h].name, c = (100 * this.rankData[t][l][h].wr).toFixed(1) + "%", u = this.rankData[t][l][h].color, y = this.rankData[t][l][h].fontColor, f = document.createElement("div"), p = document.createElement("button"), v = document.createElement("span");
-                    v.className = "tooltipText", v.innerHTML = "R:" + l + " #" + (h + 1) + " " + d, 
+                    var d = this.rankData[t][l][h].name, c = (100 * this.rankData[t][l][h].wr).toFixed(1) + "%", u = this.rankData[t][l][h].color, y = this.rankData[t][l][h].fontColor, f = document.createElement("div"), p = document.createElement("button"), m = document.createElement("span");
+                    m.className = "tooltipText", m.innerHTML = "R:" + l + " #" + (h + 1) + " " + d, 
                     p.className = "archBtn tooltip", p.id = d, p.style.backgroundColor = u, p.style.color = y, 
                     p.innerHTML = d, p.onclick = this.pressButton.bind(this), f.classList.add("winrate"), 
                     f.innerHTML = c, this.grid.appendChild(p), this.grid.appendChild(f);
@@ -3447,7 +3385,7 @@ var app, _createClass = function() {
                 }
             }
             for (var f = 0; f < this.maxElementsPerBracket; f++) {
-                var p = !0, v = !1, m = void 0;
+                var p = !0, m = !1, v = void 0;
                 try {
                     for (var b, k = this.rankBrackets[Symbol.iterator](); !(p = (b = k.next()).done); p = !0) {
                         var w = b.value;
@@ -3466,12 +3404,12 @@ var app, _createClass = function() {
                         }
                     }
                 } catch (t) {
-                    v = !0, m = t;
+                    m = !0, v = t;
                 } finally {
                     try {
                         !p && k.return && k.return();
                     } finally {
-                        if (v) throw m;
+                        if (m) throw v;
                     }
                 }
             }
@@ -3515,12 +3453,12 @@ var wrSort = function(t, e) {
             this.frequency.push(n[c]), this.archetypes.push(l[c][1] + " " + l[c][0]), this.archetypes_m.push(l[c][1].slice(0, 2) + " " + l[c][0].slice(0, 1)), 
             this.classPlusArch.push(l[c][0] + l[c][1]);
             for (var u = d; u < this.numArch; u++) {
-                var y = h[u], f = 0, p = 0, v = 0, m = o[c][y][0], b = o[c][y][1];
-                m + b > 0 && (p = m / (m + b));
+                var y = h[u], f = 0, p = 0, m = 0, v = o[c][y][0], b = o[c][y][1];
+                v + b > 0 && (p = v / (v + b));
                 var k = o[y][c][1], w = o[y][c][0];
-                k + w > 0 && (v = k / (k + w));
-                var g = m + k + b + w;
-                d == u ? (p = .5, v = .5, f = .5) : f = g < this.minGames ? .5 : m + b > 0 && k + w > 0 ? (p + v) / 2 : m + b == 0 ? v : p;
+                k + w > 0 && (m = k / (k + w));
+                var g = v + k + b + w;
+                d == u ? (p = .5, m = .5, f = .5) : f = g < this.minGames ? .5 : v + b > 0 && k + w > 0 ? (p + m) / 2 : v + b == 0 ? m : p;
                 var x = l[c][1] + " " + l[c][0], L = l[y][1] + " " + l[y][0];
                 this.table[u][d] = 1 - f, this.table[d][u] = f, this.totGames += g, g >= this.minGames ? (this.textTable[d][u] = x + "<br><b>vs:</b> " + L + "<br><b>wr:</b>  " + (100 * f).toFixed(1) + "%  (" + g + ")", 
                 this.textTable[u][d] = L + "<br><b>vs:</b> " + x + "<br><b>wr:</b>  " + (100 * (1 - f)).toFixed(1) + "%  (" + g + ")") : (this.textTable[d][u] = x + "<br><b>vs:</b> " + L + "<br><b>wr:</b>  Not enough games", 
@@ -3758,14 +3696,14 @@ var wrSort = function(t, e) {
                 var s = [], n = [], o = [], l = [], h = [], d = [], c = !0, u = !1, y = void 0;
                 try {
                     for (var f, p = range(0, this.numArch)[Symbol.iterator](); !(c = (f = p.next()).done); c = !0) {
-                        var v = a[f.value];
-                        d.push(this.classPlusArch[v]), o.push(this.archetypes[v]), l.push(this.frequency[v]), 
-                        h.push(this.winrates[v]);
-                        var m = [], b = [], k = !0, w = !1, g = void 0;
+                        var m = a[f.value];
+                        d.push(this.classPlusArch[m]), o.push(this.archetypes[m]), l.push(this.frequency[m]), 
+                        h.push(this.winrates[m]);
+                        var v = [], b = [], k = !0, w = !1, g = void 0;
                         try {
                             for (var x, L = range(0, this.numArch)[Symbol.iterator](); !(k = (x = L.next()).done); k = !0) {
                                 var C = x.value;
-                                m.push(this.table[v][a[C]]), b.push(this.textTable[v][a[C]]);
+                                v.push(this.table[m][a[C]]), b.push(this.textTable[m][a[C]]);
                             }
                         } catch (t) {
                             w = !0, g = t;
@@ -3776,7 +3714,7 @@ var wrSort = function(t, e) {
                                 if (w) throw g;
                             }
                         }
-                        s.push(m), n.push(b);
+                        s.push(v), n.push(b);
                     }
                 } catch (t) {
                     u = !0, y = t;
@@ -3896,12 +3834,12 @@ var wrSort = function(t, e) {
             });
             for (var y = 0; y < 5e4; y++) this.eq_wr(c, h), this.eq_fr(c, y);
             for (var f = [], p = 0; p < c.length; p++) {
-                var v = c[p], m = app.ui.getArchColor(null, v.name, this.f).color, b = {
-                    name: v.name,
+                var m = c[p], v = app.ui.getArchColor(null, m.name, this.f).color, b = {
+                    name: m.name,
                     x: range(0, 5e4),
-                    y: v.trace,
+                    y: m.trace,
                     fill: "tonexty",
-                    fillcolor: m,
+                    fillcolor: v,
                     type: "scatter",
                     mode: "none",
                     marker: {
@@ -3977,19 +3915,19 @@ var wrSort = function(t, e) {
                     for (var c, u = this.hsTimes[Symbol.iterator](); !(l = (c = u.next()).done); l = !0) {
                         var y = c.value;
                         this.data[o][y] = {};
-                        var f = !0, p = !1, v = void 0;
+                        var f = !0, p = !1, m = void 0;
                         try {
-                            for (var m, b = this.ranks[Symbol.iterator](); !(f = (m = b.next()).done); f = !0) {
-                                var k = m.value;
+                            for (var v, b = this.ranks[Symbol.iterator](); !(f = (v = b.next()).done); f = !0) {
+                                var k = v.value;
                                 this.data[o][y][k] = null;
                             }
                         } catch (t) {
-                            p = !0, v = t;
+                            p = !0, m = t;
                         } finally {
                             try {
                                 !f && b.return && b.return();
                             } finally {
-                                if (p) throw v;
+                                if (p) throw m;
                             }
                         }
                     }
@@ -4077,9 +4015,9 @@ var wrSort = function(t, e) {
                     if (c) throw u;
                 }
             }
-            var v = !0, m = !1, b = void 0;
+            var m = !0, v = !1, b = void 0;
             try {
-                for (var k, w = this.ranks[Symbol.iterator](); !(v = (k = w.next()).done); v = !0) {
+                for (var k, w = this.ranks[Symbol.iterator](); !(m = (k = w.next()).done); m = !0) {
                     var g, x = k.value;
                     (g = document.createElement("button")).innerHTML = btnIdToText[x], g.id = x, g.className = "folderBtn optionBtn";
                     h = function(t) {
@@ -4088,12 +4026,12 @@ var wrSort = function(t, e) {
                     g.onclick = h.bind(this), this.dropdownFolders.rank.appendChild(g);
                 }
             } catch (t) {
-                m = !0, b = t;
+                v = !0, b = t;
             } finally {
                 try {
-                    !v && w.return && w.return();
+                    !m && w.return && w.return();
                 } finally {
-                    if (m) throw b;
+                    if (v) throw b;
                 }
             }
             var L = !0, C = !1, T = void 0;
@@ -4272,9 +4210,9 @@ var wrSort = function(t, e) {
                 this.archetypeColors[c] = {};
                 var u = !0, y = !1, f = void 0;
                 try {
-                    for (var p, v = hsClasses[Symbol.iterator](); !(u = (p = v.next()).done); u = !0) {
-                        var m = p.value;
-                        this.archetypeColors[c][m] = {
+                    for (var p, m = hsClasses[Symbol.iterator](); !(u = (p = m.next()).done); u = !0) {
+                        var v = p.value;
+                        this.archetypeColors[c][v] = {
                             count: 0
                         };
                     }
@@ -4282,7 +4220,7 @@ var wrSort = function(t, e) {
                     y = !0, f = t;
                 } finally {
                     try {
-                        !u && v.return && v.return();
+                        !u && m.return && m.return();
                     } finally {
                         if (y) throw f;
                     }

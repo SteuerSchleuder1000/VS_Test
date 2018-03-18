@@ -395,7 +395,7 @@ class LadderWindow {
         switch (this.plotType) {
             case 'bar': 
                 this.graphTitle.innerHTML = 'Class Frequency vs Ranks'+games; 
-                this.graphLabel.innerHTML = 'Ranks >'
+                this.graphLabel.innerHTML = 'Ranks &#10148;'
                 break;
             case 'zoom':
                 this.graphTitle.innerHTML = this.zoomClass+' Deck Frequency vs Ranks'+games; 
@@ -403,7 +403,7 @@ class LadderWindow {
                 break;
             case 'line': 
                 this.graphTitle.innerHTML = m + ' Frequency vs Ranks'+games;
-                this.graphLabel.innerHTML = 'Ranks >'
+                this.graphLabel.innerHTML = 'Ranks &#10148;'
                 break;
             case 'pie': 
                 this.graphTitle.innerHTML = m + ' Frequency of '+rank+games; 
@@ -556,7 +556,7 @@ class LadderWindow {
             },
             plot_bgcolor: 'transparent',
             paper_bgcolor: 'transparent',
-            margin: (MOBILE) ? {l:60, r:10, b: 50, t: 0} : {l:70,r:20,b:30,t:0,},
+            margin: (MOBILE) ? {l:60, r:10, b: 50, t: 0} : {l:75,r:20,b:30,t:0,},
         }
 
 

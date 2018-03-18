@@ -61,7 +61,7 @@ class Decklist {
 
         for (let card of dl.cards) {
 
-            if (card.rarity in rarityDistribution) { rarityDistribution[card.rarity] += 1 }
+            if (card.rarity in rarityDistribution) { rarityDistribution[card.rarity] += parseInt(card.quantity) }
 
             let c = new CardDiv(card)
             if (!MOBILE) { // highlighting not working on mobile

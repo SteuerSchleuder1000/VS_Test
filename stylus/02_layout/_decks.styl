@@ -38,7 +38,7 @@
                     .selectionBtn
                         font-size 0 //1rem
                         display inline-block
-                        background-color $accentColor
+                        //background-color $accentColor
                         border 0.3rem solid #0000004d
                         //padding 0.2rem
                         margin-left 0.5rem
@@ -54,11 +54,13 @@
                             font-size 1.3rem
                             margin-left 0.4rem
                         &:hover
+                            //color $accentColor !important
                             background-color $darkColor !important
-                            color $accentColor !important
+                            border-color: $darkColor !important
                             cursor pointer
                         &:active
                             background-color yellow !important
+                            border-color: yellow !important
                         &.highlighted
                             opacity 1
                             &.classIcon
@@ -82,7 +84,7 @@
             margin-left 1.5rem
             overflow-x auto
             margin-right 1rem
-            width 70%
+            width 75%
             height 100%
             //margin auto
             .chart
@@ -93,9 +95,10 @@
                 margin-bottom 1rem
             
             .descriptionBox
-                height 100% //$cont-height - 1rem
+                height auto //100% //$cont-height - 1rem
                 padding 1rem
-                overflow-y: auto
+                //overflow-y: auto
+                overflow: auto
                 .description
                     background-color white
                     color black
@@ -105,6 +108,10 @@
                     font-weight: normal
                     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
                     text-indent: 20px; 
+                    .drLink
+                        position relative
+                        float right 
+                        opacity 0.5
                     .text
                         background-color white
                         &::first-letter

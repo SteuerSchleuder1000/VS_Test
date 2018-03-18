@@ -555,7 +555,9 @@ class Ladder {
 
         var item = document.createElement('th')
         item.className = 'pivot'
-        item.innerHTML = 'Rank ->'
+        item.innerHTML = 'Rank &#10148;' // right arrow
+        item.style.textAlign = 'right'
+        item.style.color = '#0000008a'
         headerRow.appendChild(item)
         this.download[mode] += 'Rank%2C'
         

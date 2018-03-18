@@ -19,7 +19,6 @@ class InfoWindow {
                     - Embeded the vicious syndicate twitter feed into the info tab.<br>
                     - App now loads less data on first load.<br>
                     - App now updates dynamically. Last update time shown in the top right corner.<br>
-                    - App now has a somewhat workable mobile version.<br>
                     - Udates to lots of interface elements (new icons/ text/ colors etc.)<br>
                     - Fixes to bugs and "features".<br><br>
 
