@@ -1,6 +1,6 @@
 
 import pyrebase # learn more: https://python.org/pypi/Pyrebase
-
+import json
 
 config = {
     "apiKey": "AIzaSyAt0uIAVOFjB42_bkwrEIqhSWkMT_VmluI",
@@ -36,4 +36,25 @@ def testUpload():
     data = {"testobject":0}
     db.child('testData').set(data,idToken)
 
-createNewAdmin()
+
+def resetAnalytics(p):
+    # Deletes all analytics data!!!
+    data = {'active': p, 'data': 0}  # Deletes all analytics data!!!
+    db.child('analytics').set(data,idToken)
+
+def setAnalyticsProb(p):
+    db.child('analytics').child('active').set(p, idToken)
+
+
+def downloadAnalytics():
+    analytics = db.child('analytics').child('data').get()
+    #print(analytics.val())
+    with open('analytics.json', 'w') as outfile:  
+        json.dump(analytics.val(), outfile)
+
+
+#resetAnalytics(0.01)
+downloadAnalytics()
+
+
+
