@@ -6,6 +6,7 @@ class DecksWindow {
 
     constructor (callback) {
 
+        this.name = 'decksWindow'
         this.hsFormats = hsFormats
         this.div = document.querySelector('#decksWindow')
         this.tab = document.querySelector('#decks.tab')
@@ -58,10 +59,12 @@ class DecksWindow {
         this.data = {}
         this.decklists = []
         this.archetypes = {}
+        this.drLink = {}
         
         for (let f of this.hsFormats) {
             this.data[f] = { fullyLoaded: false }
             this.archetypes[f] = []
+            this.drLink[f] = ''
             this.mu[f] = { table: {}, archNames: {}, fr: {}, wr: {}, fullyLoaded: false }
             for (let hsClass of hsClasses) {
                 this.data[f][hsClass] = {}
@@ -183,6 +186,7 @@ class DecksWindow {
 
         this.renderWindows()
         this.renderOptions()
+        this.loadArchetypes(this.hsClass)
 
         switch(this.mode) {
             case 'description':
@@ -190,7 +194,7 @@ class DecksWindow {
                 break
 
             case 'decklists':
-                this.loadArchetypes(this.hsClass)
+                //this.loadArchetypes(this.hsClass)
                 let archName = (this.hsArch != null) ? this.hsArch.name : null
                 this.loadDecklists(archName)
                 this.plotDecklists()
@@ -509,14 +513,14 @@ class DecksWindow {
         if (this.fullyLoaded) {return}
         let data = DATA.val()
         let f = hsFormat
-
+        this.drLink[hsFormat] = data.dataReaperLink 
 
 
         for (let hsClass of hsClasses) {
             this.data[f][hsClass].archetypes = [] // delete existing
             this.data[f][hsClass].text = data[hsClass].text
             if (!('archetypes' in data[hsClass])) { continue } // sometimes a class has 0 archetypes
-            //let keys = Object.keys(data[hsClass].archetypes)
+
             for (let key in data[hsClass].archetypes) {
 
                 let wr = 0
@@ -597,7 +601,7 @@ class DecksWindow {
         // if hsclass == meta -> load/ link meta report
         let d = this.data[this.f][this.hsClass]
         let title = '<p class="title">'+this.hsClass+'</p>'
-        let drLink = '<a class="drLink" target="_blank" href='+'https://www.vicioussyndicate.com/vs-data-reaper-report-84/'+'>Meta Report #84</a>'
+        let drLink = '<a class="drLink" target="_blank" href='+this.drLink[this.f]+'>Data Reaper Report</a>'
         let text = '<p class="text">'+d.text+'</p>'
 
         this.description.innerHTML = drLink + title + text

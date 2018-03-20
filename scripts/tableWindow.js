@@ -19,6 +19,7 @@ class TableWindow {
 
         this.firebasePath = (PREMIUM) ? 'premiumData/tableData' : 'data/tableData'
 
+        this.name = 'tableWindow'
         this.data = {}
         this.mode = 'matchup' // modes = [matchup, simulation]
         this.hsFormats = hsFormats
@@ -70,7 +71,7 @@ class TableWindow {
         
         this.fullyLoaded = false
         this.overlay = false
-        this.minGames = 1000
+        this.minGames = 1000 // minimum number of games per parameters to plot
 
 
         for (var f of this.hsFormats) {

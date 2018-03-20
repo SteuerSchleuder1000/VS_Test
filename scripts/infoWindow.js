@@ -2,11 +2,13 @@ class InfoWindow {
     
     constructor(callback) {
 
+        this.name = 'infoWindow'
         this.div = document.querySelector('#infoWindow')
         this.tab = document.querySelector('#info.tab')
         this.infoText = document.querySelector('#infoWindow .content .infoText')
         this.twitterFeed = document.querySelector('#infoWindow .content .twitterDiv')
         this.mode = 'info' // [info, twitter]
+        this.f = 'Standard'
         this.text =`
                 Greetings and thank you for checking out the VS Live!<br><br>
 

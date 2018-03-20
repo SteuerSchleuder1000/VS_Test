@@ -15,8 +15,6 @@ window.onload = function() {
 
 
 
-
-
 // Utility
 
 let wrSort = function (a,b) {return a.wr > b.wr ? -1: a.wr < b.wr ? 1 : 0 }

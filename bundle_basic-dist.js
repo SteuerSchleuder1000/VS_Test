@@ -137,6 +137,9 @@ var app, _createClass = function() {
                     });
                 } else console.log("not logged in"), t.ui.loggedIn = !0, t.load(0);
             });
+            this.fb_db.ref("analytics/active").on("value", function(e) {
+                t.p = e.val(), e.val() > 0 && t.startAnalytics(e.val());
+            }, function(t) {});
         }
     }, {
         key: "load",
@@ -164,8 +167,29 @@ var app, _createClass = function() {
             }
         }
     }, {
-        key: "reload",
-        value: function() {}
+        key: "startAnalytics",
+        value: function(t) {
+            console.log("start analytics with prob interval", t), window.setInterval(app.analytics, 5e3);
+        }
+    }, {
+        key: "analytics",
+        value: function() {
+            if (!(Math.random() > app.p)) {
+                var t = app.path.window;
+                if (null != t) {
+                    var e = new Date().getTime(), a = {
+                        w: t.name[0],
+                        f: t.f[0],
+                        t: t.t,
+                        r: t.r,
+                        m: t.mode,
+                        p: t.plotType,
+                        premium: PREMIUM
+                    };
+                    app.fb_db.ref("analytics/data/" + e).set(a);
+                }
+            }
+        }
     } ]), t;
 }(), PREMIUM = !1, login = {
     email: "freeUser@vs.com",
@@ -238,13 +262,13 @@ var app, _createClass = function() {
         var L = document.createElement("p");
         L.className = "rarityInfo", L.innerHTML = "(", w.appendChild(L);
         for (var C = [ "Legendary", "Epic", "Rare" ], T = 0; T < C.length; T++) {
-            var S = C[T], B = document.createElement("p");
-            B.className = "rarityInfo", B.innerHTML = s[S];
-            var D = document.createElement("img");
-            D.className = "dustImg", D.src = "Images/gem_" + S + ".png", w.appendChild(B), w.appendChild(D);
+            var S = C[T], W = document.createElement("p");
+            W.className = "rarityInfo", W.innerHTML = s[S];
+            var B = document.createElement("img");
+            B.className = "dustImg", B.src = "Images/gem_" + S + ".png", w.appendChild(W), w.appendChild(B);
         }
-        var W = document.createElement("p");
-        W.className = "rarityInfo", W.innerHTML = ")", w.appendChild(W), this.deckinfo.appendChild(w);
+        var D = document.createElement("p");
+        D.className = "rarityInfo", D.innerHTML = ")", w.appendChild(D), this.deckinfo.appendChild(w);
         var M = document.createElement("p");
         M.className = "cardtypes";
         var _ = "", I = !0, q = !1, E = void 0;
@@ -494,9 +518,9 @@ var app, _createClass = function() {
     } ]), t;
 }(), DecksWindow = function() {
     function t(e) {
-        _classCallCheck(this, t), this.hsFormats = hsFormats, this.div = document.querySelector("#decksWindow"), 
-        this.tab = document.querySelector("#decks.tab"), this.chartDiv = document.querySelector("#decksWindow .content .chart"), 
-        this.descriptionBox = document.querySelector("#decksWindow .content .descriptionBox"), 
+        _classCallCheck(this, t), this.name = "decksWindow", this.hsFormats = hsFormats, 
+        this.div = document.querySelector("#decksWindow"), this.tab = document.querySelector("#decks.tab"), 
+        this.chartDiv = document.querySelector("#decksWindow .content .chart"), this.descriptionBox = document.querySelector("#decksWindow .content .descriptionBox"), 
         this.decksDiv = document.querySelector("#decksWindow .content .decklists"), this.description = document.querySelector("#decksWindow .content .descriptionBox .description"), 
         this.overlayDiv = document.querySelector("#decksWindow .overlay"), this.overlayP = document.querySelector("#decksWindow .overlayText"), 
         this.questionBtn = document.querySelector("#decksWindow .question"), this.subWindows = [ this.descriptionBox, this.decksDiv, this.chartDiv ];
@@ -818,18 +842,18 @@ var app, _createClass = function() {
                                     b || p || (v = !0);
                                     var S = "";
                                     p && (S = "core_x1"), m && (S = "core_x2"), v && (S = "some"), b && (S = "unique");
-                                    var B = !0, D = !1, W = void 0;
+                                    var W = !0, B = !1, D = void 0;
                                     try {
-                                        for (var M, _ = this.decklists[Symbol.iterator](); !(B = (M = _.next()).done); B = !0) {
+                                        for (var M, _ = this.decklists[Symbol.iterator](); !(W = (M = _.next()).done); W = !0) {
                                             M.value.classify(f.name, S);
                                         }
                                     } catch (t) {
-                                        D = !0, W = t;
+                                        B = !0, D = t;
                                     } finally {
                                         try {
-                                            !B && _.return && _.return();
+                                            !W && _.return && _.return();
                                         } finally {
-                                            if (D) throw W;
+                                            if (B) throw D;
                                         }
                                     }
                                 }
@@ -1526,9 +1550,10 @@ var app, _createClass = function() {
     } ]), t;
 }(), InfoWindow = function() {
     function t(e) {
-        _classCallCheck(this, t), this.div = document.querySelector("#infoWindow"), this.tab = document.querySelector("#info.tab"), 
-        this.infoText = document.querySelector("#infoWindow .content .infoText"), this.twitterFeed = document.querySelector("#infoWindow .content .twitterDiv"), 
-        this.mode = "info", this.text = '\n                Greetings and thank you for checking out the VS Live!<br><br>\n\n                    <b>Update 2.0:</b><br><br>\n\n                    - New Power Score plot in the overview tab.<br>\n                    - You can now change the color scheme in the Matchups tab.<br>\n                    - Added meta simulation tool for Premium users in the Matchups tab.<br>\n                    - Reworked Deck tab. Includes a deck comparison feature and a dust vs winrate plot.<br>\n                    - Embeded the vicious syndicate twitter feed into the info tab.<br>\n                    - App now loads less data on first load.<br>\n                    - App now updates dynamically. Last update time shown in the top right corner.<br>\n                    - Udates to lots of interface elements (new icons/ text/ colors etc.)<br>\n                    - Fixes to bugs and "features".<br><br>\n\n                   To give feedback simply click on the discord link below:<br><br>\n                   \n                <a href=' + DISCORDLINK + '\n                   target="_blank"><img class=\'discordLogo\' src="Images/discordLogo.png"></a><br><br>\n                ', 
+        _classCallCheck(this, t), this.name = "infoWindow", this.div = document.querySelector("#infoWindow"), 
+        this.tab = document.querySelector("#info.tab"), this.infoText = document.querySelector("#infoWindow .content .infoText"), 
+        this.twitterFeed = document.querySelector("#infoWindow .content .twitterDiv"), this.mode = "info", 
+        this.f = "Standard", this.text = '\n                Greetings and thank you for checking out the VS Live!<br><br>\n\n                    <b>Update 2.0:</b><br><br>\n\n                    - New Power Score plot in the overview tab.<br>\n                    - You can now change the color scheme in the Matchups tab.<br>\n                    - Added meta simulation tool for Premium users in the Matchups tab.<br>\n                    - Reworked Deck tab. Includes a deck comparison feature and a dust vs winrate plot.<br>\n                    - Embeded the vicious syndicate twitter feed into the info tab.<br>\n                    - App now loads less data on first load.<br>\n                    - App now updates dynamically. Last update time shown in the top right corner.<br>\n                    - Udates to lots of interface elements (new icons/ text/ colors etc.)<br>\n                    - Fixes to bugs and "features".<br><br>\n\n                   To give feedback simply click on the discord link below:<br><br>\n                   \n                <a href=' + DISCORDLINK + '\n                   target="_blank"><img class=\'discordLogo\' src="Images/discordLogo.png"></a><br><br>\n                ', 
         this.infoText.innerHTML = this.text, this.setupUI();
     }
     return _createClass(t, [ {
@@ -1670,18 +1695,18 @@ var app, _createClass = function() {
                 this.totGamesBrackets[x.name] = 0;
                 var L = [], C = !0, T = !1, S = void 0;
                 try {
-                    for (var B, D = hsClasses[Symbol.iterator](); !(C = (B = D.next()).done); C = !0) kt = B.value, 
+                    for (var W, B = hsClasses[Symbol.iterator](); !(C = (W = B.next()).done); C = !0) kt = W.value, 
                     L.push(hsColors[kt]);
                 } catch (t) {
                     T = !0, S = t;
                 } finally {
                     try {
-                        !C && D.return && D.return();
+                        !C && B.return && B.return();
                     } finally {
                         if (T) throw S;
                     }
                 }
-                var W = {
+                var D = {
                     values: fillRange(0, hsClasses.length, 0),
                     labels: hsClasses.slice(),
                     marker: {
@@ -1715,7 +1740,7 @@ var app, _createClass = function() {
                     },
                     text: [],
                     type: "pie"
-                } ], this.traces.pie.classes[x.name] = [ W ];
+                } ], this.traces.pie.classes[x.name] = [ D ];
             }
         } catch (t) {
             b = !0, k = t;
@@ -1835,15 +1860,15 @@ var app, _createClass = function() {
                 E = vt.value;
                 var kt = hsClasses[E], wt = [], gt = [], xt = 0, Lt = !0, Ct = !1, Tt = void 0;
                 try {
-                    for (var St, Bt = range(0, hsRanks)[Symbol.iterator](); !(Lt = (St = Bt.next()).done); Lt = !0) {
-                        var Dt = St.value, Wt = q[Dt][E];
-                        wt.push(Wt), gt.push(kt + " " + (100 * Wt).toFixed(2) + "%"), xt += Wt;
+                    for (var St, Wt = range(0, hsRanks)[Symbol.iterator](); !(Lt = (St = Wt.next()).done); Lt = !0) {
+                        var Bt = St.value, Dt = q[Bt][E];
+                        wt.push(Dt), gt.push(kt + " " + (100 * Dt).toFixed(2) + "%"), xt += Dt;
                         var Mt = !0, _t = !1, It = void 0;
                         try {
                             for (var qt, Et = this.rankBrackets[Symbol.iterator](); !(Mt = (qt = Et.next()).done); Mt = !0) {
                                 var Ft;
-                                Dt >= (Ft = qt.value).start && Dt <= Ft.end && (this.traces.pie.classes[Ft.name][0].values[E] += Wt), 
-                                Dt == Ft.end && (this.traces.pie.classes[Ft.name][0].values[E] /= Ft.end - Ft.start + 1);
+                                Bt >= (Ft = qt.value).start && Bt <= Ft.end && (this.traces.pie.classes[Ft.name][0].values[E] += Dt), 
+                                Bt == Ft.end && (this.traces.pie.classes[Ft.name][0].values[E] /= Ft.end - Ft.start + 1);
                             }
                         } catch (t) {
                             _t = !0, It = t;
@@ -1859,7 +1884,7 @@ var app, _createClass = function() {
                     Ct = !0, Tt = t;
                 } finally {
                     try {
-                        !Lt && Bt.return && Bt.return();
+                        !Lt && Wt.return && Wt.return();
                     } finally {
                         if (Ct) throw Tt;
                     }
@@ -2129,21 +2154,21 @@ var app, _createClass = function() {
                     if (l) throw h;
                 }
             }
-            var S = !0, B = !1, D = void 0;
+            var S = !0, W = !1, B = void 0;
             try {
-                for (var W, M = this.traces.map[t][Symbol.iterator](); !(S = (W = M.next()).done); S = !0) {
-                    var _ = W.value;
+                for (var D, M = this.traces.map[t][Symbol.iterator](); !(S = (D = M.next()).done); S = !0) {
+                    var _ = D.value;
                     _.x = [ (_.wr + s - 1) / (2 * s - 1) ], _.y = [ _.fr / n ];
                     var I = (_.x[0] + _.y[0]) / 2;
                     _.text = "<b>" + _.name + "<br>Meta:</b> " + I.toFixed(2) + "<br><b>WR:</b> " + _.wr.toFixed(2) + " <b>Freq:</b> " + (100 * _.fr).toFixed(0) + "%";
                 }
             } catch (t) {
-                B = !0, D = t;
+                W = !0, B = t;
             } finally {
                 try {
                     !S && M.return && M.return();
                 } finally {
-                    if (B) throw D;
+                    if (W) throw B;
                 }
             }
             return this.traces.map[t];
@@ -2281,8 +2306,9 @@ var app, _createClass = function() {
     } ]), t;
 }(), LadderWindow = function() {
     function t(e) {
-        _classCallCheck(this, t), this.div = document.querySelector("#ladderWindow"), this.tab = document.querySelector("#ladder.tab"), 
-        this.chartDiv = document.querySelector("#ladderWindow #chart1"), this.classDeckOptions = document.querySelector("#ladderWindow .content-header .classDeckOptions"), 
+        _classCallCheck(this, t), this.name = "ladderWindow", this.div = document.querySelector("#ladderWindow"), 
+        this.tab = document.querySelector("#ladder.tab"), this.chartDiv = document.querySelector("#ladderWindow #chart1"), 
+        this.classDeckOptions = document.querySelector("#ladderWindow .content-header .classDeckOptions"), 
         this.nrGamesBtn = document.querySelector("#ladderWindow .content-header #showNumbers"), 
         this.graphTitle = document.querySelector("#ladderWindow .graphTitle"), this.graphLabel = document.querySelector("#ladderWindow .graphLabel"), 
         this.rankFolder = document.querySelector("#ladderWindow .content-header #rankBtn"), 
@@ -2425,10 +2451,10 @@ var app, _createClass = function() {
                     if (g) throw x;
                 }
             }
-            var B = PREMIUM ? "flex" : "none";
+            var W = PREMIUM ? "flex" : "none";
             this.questionBtn.addEventListener("click", this.toggleOverlay.bind(this)), this.overlayDiv.addEventListener("click", this.toggleOverlay.bind(this)), 
-            this.classDeckOptions.style.display = B, document.querySelector("#ladderWindow .content-header .graphOptions #line").style.display = B, 
-            document.querySelector("#ladderWindow .content-header .graphOptions #timeline").style.display = B, 
+            this.classDeckOptions.style.display = W, document.querySelector("#ladderWindow .content-header .graphOptions #line").style.display = W, 
+            document.querySelector("#ladderWindow .content-header .graphOptions #timeline").style.display = W, 
             this.nrGamesBtn.onclick = this.annotate.bind(this), this.optionButtons = document.querySelectorAll("#ladderWindow .optionBtn");
         }
     }, {
@@ -2993,11 +3019,11 @@ var app, _createClass = function() {
     "§": "#88042d"
 }, PowerWindow = function() {
     function t() {
-        _classCallCheck(this, t), this.div = document.querySelector("#powerWindow"), this.tab = document.querySelector("#power.tab"), 
-        this.grid = document.querySelector("#powerGrid"), this.optionButtons = document.querySelectorAll("#powerWindow .optionBtn"), 
-        this.questionBtn = document.querySelector("#powerWindow .question"), this.overlayDiv = document.querySelector("#powerWindow .overlay"), 
-        this.overlayP = document.querySelector("#powerWindow .overlayText"), this.f = "Standard", 
-        this.mode = "brackets", this.t_ladder = {
+        _classCallCheck(this, t), this.name = "powerWindow", this.div = document.querySelector("#powerWindow"), 
+        this.tab = document.querySelector("#power.tab"), this.grid = document.querySelector("#powerGrid"), 
+        this.optionButtons = document.querySelectorAll("#powerWindow .optionBtn"), this.questionBtn = document.querySelector("#powerWindow .question"), 
+        this.overlayDiv = document.querySelector("#powerWindow .overlay"), this.overlayP = document.querySelector("#powerWindow .overlayText"), 
+        this.f = "Standard", this.mode = "brackets", this.t_ladder = {
             Standard: "lastDay",
             Wild: "last2Weeks"
         }, PREMIUM && (this.t_ladder.Wild = "lastWeek"), this.t_table = "last2Weeks", this.maxElementsPerRank = 5, 
@@ -3169,10 +3195,10 @@ var app, _createClass = function() {
                 for (var x, L = r[Symbol.iterator](); !(k = (x = L.next()).done); k = !0) {
                     var C = x.value, T = s.indexOf(C.name);
                     if (-1 != T) {
-                        var S = !0, B = !1, D = void 0;
+                        var S = !0, W = !1, B = void 0;
                         try {
-                            for (var W, M = range(0, hsRanks)[Symbol.iterator](); !(S = (W = M.next()).done); S = !0) {
-                                var _ = W.value, I = 0, q = 0, E = !0, F = !1, R = void 0;
+                            for (var D, M = range(0, hsRanks)[Symbol.iterator](); !(S = (D = M.next()).done); S = !0) {
+                                var _ = D.value, I = 0, q = 0, E = !0, F = !1, R = void 0;
                                 try {
                                     for (var A, H = r[Symbol.iterator](); !(E = (A = H.next()).done); E = !0) {
                                         var O = A.value, P = s.indexOf(O.name);
@@ -3222,12 +3248,12 @@ var app, _createClass = function() {
                                 }
                             }
                         } catch (t) {
-                            B = !0, D = t;
+                            W = !0, B = t;
                         } finally {
                             try {
                                 !S && M.return && M.return();
                             } finally {
-                                if (B) throw D;
+                                if (W) throw B;
                             }
                         }
                     }
@@ -3802,9 +3828,7 @@ var wrSort = function(t, e) {
                     if (s) throw n;
                 }
             }
-            var h = this.table;
-            this.plotPoints = parseInt(50);
-            for (var d = {
+            for (var h = this.table, d = {
                 title: "Meta Simulation",
                 xaxis: {
                     type: "log",
@@ -3815,6 +3839,7 @@ var wrSort = function(t, e) {
                 },
                 yaxis: {
                     range: [ 0, 1 ],
+                    hoverformat: ".2f",
                     fixedrange: !0,
                     title: "Share of Meta",
                     opacity: .5
@@ -3824,20 +3849,35 @@ var wrSort = function(t, e) {
                 paper_bgcolor: this.bgColor
             }, c = [], u = 0; u < e.length; u++) c.push({
                 idx: u,
-                itt: 0,
                 name: e[u],
                 fr: a[u] / i,
-                trace: [],
                 x: [],
                 y: [],
                 wr: .5
             });
-            for (var y = 0; y < 5e4; y++) this.eq_wr(c, h), this.eq_fr(c, y);
+            for (var y = 0; y < 1e5 + 1; y++) this.eq_wr(c, h), this.eq_fr(c, y);
             for (var f = [], p = 0; p < c.length; p++) {
-                var m = c[p], v = app.ui.getArchColor(null, m.name, this.f).color, b = {
+                var m = c[p], v = app.ui.getArchColor(null, m.name, this.f).color, b = [], k = !0, w = !1, g = void 0;
+                try {
+                    for (var x, L = m.y[Symbol.iterator](); !(k = (x = L.next()).done); k = !0) {
+                        var C = x.value;
+                        b.push((100 * C).toFixed(1) + "%");
+                    }
+                } catch (t) {
+                    w = !0, g = t;
+                } finally {
+                    try {
+                        !k && L.return && L.return();
+                    } finally {
+                        if (w) throw g;
+                    }
+                }
+                f.push({
                     name: m.name,
-                    x: range(0, 5e4),
-                    y: m.trace,
+                    x: m.x,
+                    y: m.y,
+                    text: b,
+                    hoverinfo: "text+x+name",
                     fill: "tonexty",
                     fillcolor: v,
                     type: "scatter",
@@ -3848,8 +3888,7 @@ var wrSort = function(t, e) {
                             size: 0
                         }
                     }
-                };
-                f.push(b);
+                });
             }
             Plotly.newPlot("chart2", this.stackedArea(f), d), app.ui.hideLoader();
         }
@@ -3873,13 +3912,14 @@ var wrSort = function(t, e) {
             t.sort(function(t, e) {
                 return t.wr < e.wr ? -1 : t.wr > e.wr ? 1 : 0;
             });
-            for (var a = 0; a < t.length; a++) t[a].trace.push(t[a].fr);
-            for (var i = 0; i < t.length; i++) {
-                var r = t[i];
-                if (!(r.wr > .5)) {
-                    var s = r.fr * (.5 - r.wr) * .1;
-                    s = r.fr - s >= 1e-4 ? s : r.fr - 1e-4, r.fr -= s;
-                    for (var n = s / (t.length - i - 1), o = i + 1; o < t.length; o++) t[o].fr += n;
+            var a = e.toString().length;
+            if (e % Math.pow(10, a - 2) == 0 || a < 3) for (var i in t) t[i].x.push(e), t[i].y.push(t[i].fr);
+            for (var r = 0; r < t.length; r++) {
+                var s = t[r];
+                if (!(s.wr > .5)) {
+                    var n = s.fr * (.5 - s.wr) * .1;
+                    n = s.fr - n >= 1e-4 ? n : s.fr - 1e-4, s.fr -= n;
+                    for (var o = n / (t.length - r - 1), l = r + 1; l < t.length; l++) t[l].fr += o;
                 }
             }
             t.sort(function(t, e) {
@@ -3894,9 +3934,10 @@ var wrSort = function(t, e) {
         this.overlayDiv = document.querySelector("#tableWindow .overlay"), this.overlayP = document.querySelector("#tableWindow .overlayText"), 
         this.nrGamesP = document.querySelector("#tableWindow .nrGames"), this.nrGamesBtn = document.querySelector("#tableWindow .content-header #showNumbers"), 
         this.simulationBtn = document.querySelector("#tableWindow .equilibriumBtn"), this.firebasePath = PREMIUM ? "premiumData/tableData" : "data/tableData", 
-        this.data = {}, this.mode = "matchup", this.hsFormats = hsFormats, this.hsTimes = PREMIUM ? table_times_premium : table_times, 
-        this.ranks = PREMIUM ? table_ranks_premium : table_ranks, this.sortOptions = PREMIUM ? table_sortOptions_premium : table_sortOptions, 
-        this.numArch = 16, this.annotated = !1, this.nrGames = 0, this.colorTheme = 0, this.overlayText = {}, 
+        this.name = "tableWindow", this.data = {}, this.mode = "matchup", this.hsFormats = hsFormats, 
+        this.hsTimes = PREMIUM ? table_times_premium : table_times, this.ranks = PREMIUM ? table_ranks_premium : table_ranks, 
+        this.sortOptions = PREMIUM ? table_sortOptions_premium : table_sortOptions, this.numArch = 16, 
+        this.annotated = !1, this.nrGames = 0, this.colorTheme = 0, this.overlayText = {}, 
         this.overlayText.matchup = "\n            Here you can see how your deck on the left hand side performs against any other deck on the top. \n            The colors range  from favorable <span class='blue'>blue</span> to unfavorable <span class='red'>red</span>.<br><br>\n            The matchup table lists the top " + this.numArch + " most frequent decks within the selected time and rank brackets.<br><br>\n            The hover info lists the number of games recorded for that specific matchup in the (parenthesis).<br><br>\n            The 'Overall' line at the bottom shows the overall winrate of the opposing decks in the specified time and rank bracket.<br><br>\n            Sorting the table displays the most frequent/ highest winrate deck in the top left. Changing the format, time or rank brackets automatically sorts the table.<br><br>\n            <img src='Images/muSort.png'></img>\n            \n            <br><br><br><br>\n            Click on a matchup to 'zoom in'. Click again to 'zoom out'.<br><br>\n            In the zoomed in view you see only one deck on the left side.<br><br>\n            Additionally there are 2 subplots displaying the frequency of the opposing decks (brown line chart) and the specific matchup as black bar charts.<br><br>\n            Changing any parameter (Format, time, rank, sorting) keeps you zoomed into the same archetype if possible.<br><br>\n            You can additionally sort 'by Matchup' while zoomed in.<br><br>\n        ", 
         this.overlayText.simulation = "\n            The simulation simulates the meta if all players would rationally switch from weaker to stronger decks according to the current meta.<br><br>\n            &#8226 The x axis shows the simulation over time (simulation steps)<br>\n            &#8226 The y axis shows the percentage of the meta an archetype occupies at a particular time.<br><br>\n            Click on any button to go back to the Matchup chart.\n        ", 
         this.width = document.querySelector(".main-wrapper").offsetWidth - 40, this.height = .94 * document.querySelector("#ladderWindow .content").offsetHeight, 
@@ -4036,19 +4077,19 @@ var wrSort = function(t, e) {
             }
             var L = !0, C = !1, T = void 0;
             try {
-                for (var S, B = this.sortOptions[Symbol.iterator](); !(L = (S = B.next()).done); L = !0) {
-                    var D = S.value, W = document.createElement("button");
-                    W.innerHTML = btnIdToText[D], W.id = D, W.className = "folderBtn optionBtn";
-                    W.onclick = function(t) {
+                for (var S, W = this.sortOptions[Symbol.iterator](); !(L = (S = W.next()).done); L = !0) {
+                    var B = S.value, D = document.createElement("button");
+                    D.innerHTML = btnIdToText[B], D.id = B, D.className = "folderBtn optionBtn";
+                    D.onclick = function(t) {
                         this.mode = "matchup", this.sortBy = t.target.id, this.data[this.f][this.t][this.r].sortTableBy(this.sortBy), 
                         this.renderOptions();
-                    }.bind(this), this.dropdownFolders.sort.appendChild(W);
+                    }.bind(this), this.dropdownFolders.sort.appendChild(D);
                 }
             } catch (t) {
                 C = !0, T = t;
             } finally {
                 try {
-                    !L && B.return && B.return();
+                    !L && W.return && W.return();
                 } finally {
                     if (C) throw T;
                 }
@@ -4251,31 +4292,31 @@ var wrSort = function(t, e) {
         }
         var L = !0, C = !1, T = void 0;
         try {
-            for (var S, B = this.folderButtons[Symbol.iterator](); !(L = (S = B.next()).done); L = !0) {
+            for (var S, W = this.folderButtons[Symbol.iterator](); !(L = (S = W.next()).done); L = !0) {
                 S.value.addEventListener("click", this.toggleDropDown.bind(this));
             }
         } catch (t) {
             C = !0, T = t;
         } finally {
             try {
-                !L && B.return && B.return();
+                !L && W.return && W.return();
             } finally {
                 if (C) throw T;
             }
         }
         if (MOBILE) {
-            var D = !0, W = !1, M = void 0;
+            var B = !0, D = !1, M = void 0;
             try {
-                for (var _, I = this.mobileBtns[Symbol.iterator](); !(D = (_ = I.next()).done); D = !0) {
+                for (var _, I = this.mobileBtns[Symbol.iterator](); !(B = (_ = I.next()).done); B = !0) {
                     _.value.addEventListener("click", this.mobileMenu.bind(this));
                 }
             } catch (t) {
-                W = !0, M = t;
+                D = !0, M = t;
             } finally {
                 try {
-                    !D && I.return && I.return();
+                    !B && I.return && I.return();
                 } finally {
-                    if (W) throw M;
+                    if (D) throw M;
                 }
             }
             detectswipe(".navbar .mobileTabs .tab", this.swipeTab.bind(this));

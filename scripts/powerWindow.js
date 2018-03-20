@@ -5,6 +5,7 @@ class PowerWindow {
 
     constructor () {
 
+        this.name = 'powerWindow'
         this.div = document.querySelector('#powerWindow')
         this.tab = document.querySelector('#power.tab')
         this.grid = document.querySelector('#powerGrid')

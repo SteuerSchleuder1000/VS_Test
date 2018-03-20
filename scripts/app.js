@@ -72,6 +72,12 @@ class App {
                 this.load(0)
             }
         })
+
+        let ref = this.fb_db.ref('analytics/active') // if analytics active
+        ref.on('value', d => { 
+            this.p = d.val()
+            if (d.val() > 0) { this.startAnalytics(d.val()) }
+        }, e => { return })
     } // setup Firebase
 
 
@@ -112,10 +118,35 @@ class App {
 
 
 
-    reload() {
-
-        //this.path = this.ui.path
-        //this.setupFirebase()
+    startAnalytics(p) { 
+        console.log('start analytics with prob interval',p)
+        window.setInterval( app.analytics , 30*1000) 
     }
 
-}
+    analytics() {
+        let random = Math.random()
+        if ( random > app.p ) { return }
+        //console.log('uploaded',random,app.p)
+
+        let w = app.path.window
+        if (w == null) { return }
+        let utc = new Date().getTime()
+        let info = {
+            w: w.name[0],   // window name
+            f: w.f[0],      // format
+            t: w.t,         // time
+            r: w.r,         // ranks
+            m: w.mode,      // mode
+            p: w.plotType, 
+            premium: PREMIUM,
+        }
+
+        for (let key in info) { if (info[key] == undefined) {info[key] = '' } }
+
+        //console.log(info)
+        app.fb_db.ref('analytics/data/'+utc).set(info)
+    }
+
+}// App
+
+

@@ -17,7 +17,7 @@ class Table {
         this.fontColor = '#22222'
         this.subplotRatio = 0.6
         this.overallString = '<b style="font-size:130%">Overall</b>'
-        this.minGames = 20
+        this.minGames = 50 // minimum number of games to be displayed in chart
         this.whiteTile = 0.50000001
         this.blackTile = 0.51
         let cs_1 =  [ // Green Blue
@@ -85,6 +85,18 @@ class Table {
             this.textTable.push(fillRange(0,this.numArch,''))
         }
 
+        let classAbr = { // class name abreviations for mobile site
+            'Druid': 'Dr',
+            'Hunter': 'Hu',
+            'Mage': 'Ma',
+            'Paladin': 'Pa',
+            'Priest': 'Pr',
+            'Rogue': 'Rg',
+            'Shaman': 'Sh',
+            'Warlock': 'Wl',
+            'Warrior': 'Wr'
+        }
+
         // Process Data
         for (var i=0;i<this.numArch;i++) {
         
@@ -92,7 +104,7 @@ class Table {
         
             this.frequency.push(FR[x])
             this.archetypes.push(ARCHETYPES[x][1]+" "+ARCHETYPES[x][0])
-            this.archetypes_m.push(ARCHETYPES[x][1].slice(0,2)+" "+ARCHETYPES[x][0].slice(0,1))
+            this.archetypes_m.push(ARCHETYPES[x][1].slice(0,2)+" "+classAbr[ARCHETYPES[x][0]])
             this.classPlusArch.push(ARCHETYPES[x][0]+ARCHETYPES[x][1])
                 
         
@@ -192,6 +204,8 @@ class Table {
     }// close constructor
 
 
+
+
     getFreqPlotData(freq, archetypes) {
 
         var freq = this.frequency.slice()        
@@ -267,13 +281,14 @@ class Table {
             hoverinfo: 'x+y',
         }
 
+        // trace annotations
         let trace_ann = { x: [], y: [], text: [], mode: 'text', font: { color:'#9c9c9c', size: 8 }, hoverinfo: 'none' }
 
         for (let i of range(0,this.numArch)) {
             trace_ann.x.push(this.archetypes[i])
             if (MOBILE) { trace_ann.y.push(this.archetypes_m[i]) }
             else { trace_ann.y.push(this.archetypes[i]) }
-            trace_ann.text.push(' X ')
+            trace_ann.text.push(' X ') // 'X' symbol for mirror matchups
         }
         
         let data = [trace_Table,trace_FR,trace_WR]
@@ -293,9 +308,10 @@ class Table {
         this.window.setTotGames()
     }
 
-
+    // add frequency line plot to chart
     subPlotFR() { Plotly.restyle('chart2',this.freqPlotData, 1) }
 
+    // add winrate bar plot to chart
     subPlotWR (idx) {
         var wr
     
@@ -319,6 +335,7 @@ class Table {
         
         Plotly.restyle('chart2',wrPlotData,2)
     }
+
 
     zoomToggle (data) {
         console.log('click',data)
@@ -348,6 +365,7 @@ class Table {
         this.subPlotFR()
         this.subPlotWR(idx)
 
+        // replace sort options 'winrate' with 'matchup'
         var OptMU = document.querySelector('#tableWindow #matchup')
         var OptWR = document.querySelector('#tableWindow #winrate')
         OptMU.style.display = 'inline-block'
@@ -372,6 +390,7 @@ class Table {
         Plotly.relayout('chart2',layout_zoomOut);
         Plotly.restyle('chart2',{visible:false},[1,2])
 
+        // replace sort options 'matchup' with 'winrate'
         var OptMU = document.querySelector('#tableWindow #matchup')
         var OptWR = document.querySelector('#tableWindow #winrate')
         OptMU.style.display = 'none'
@@ -509,9 +528,7 @@ class Table {
         let totFr = 0
         for (let a of arch_freq) {totFr += a}
         let matrix = this.table
-        let max_itt = 1000*50    // maximum iterations of simulation
-        let numPoints = 1000     // number of points on plot
-        this.plotPoints = parseInt(max_itt/numPoints) 
+        let max_itt = 1000*100+1    // maximum iterations of simulation
         let layout = {
                 title: 'Meta Simulation',
                 xaxis: {
@@ -523,6 +540,7 @@ class Table {
                 },
                 yaxis: { 
                     range: [0,1],
+                    hoverformat: '.2f',
                     fixedrange: true,
                     title: 'Share of Meta',
                     opacity: 0.5,
@@ -536,10 +554,8 @@ class Table {
         for (let i=0;i<arch_names.length;i++) {
             archetypes.push({
                 idx: i,
-                itt: 0,
                 name: arch_names[i],
                 fr: arch_freq[i]/totFr,
-                trace: [],
                 x: [],
                 y: [],
                 wr: 0.5,
@@ -557,10 +573,14 @@ class Table {
         for (let i=0;i<archetypes.length; i++) {
             let a = archetypes[i]
             let color = app.ui.getArchColor(null, a.name, this.f).color
-            let trace = {
+            let text = []
+            for (let y of a.y) { text.push((y*100).toFixed(1)+'%') }
+            traces.push({
                 name: a.name,
-                x: range(0,max_itt),
-                y: a.trace,
+                x: a.x, 
+                y: a.y, 
+                text: text,
+                hoverinfo: 'text+x+name',
                 fill: 'tonexty',
                 fillcolor: color,
                 type: 'scatter',
@@ -569,8 +589,7 @@ class Table {
                     size: 0,
                     line: {size: 0},
                 }
-            }
-            traces.push(trace)
+            })
         }
         Plotly.newPlot('chart2', this.stackedArea(traces), layout);
         app.ui.hideLoader()
@@ -579,8 +598,8 @@ class Table {
     // Stack equilibrium charts
     stackedArea(traces) {
         for(var i=1; i<traces.length; i++) {
-            for(var j=0; j<(Math.min(traces[i]['y'].length, traces[i-1]['y'].length)); j++) {
-                traces[i]['y'][j] += traces[i-1]['y'][j];
+            for(var j=0; j<(Math.min(traces[i].y.length, traces[i-1].y.length)); j++) {
+                traces[i].y[j] += traces[i-1].y[j];
             }
         }
         return traces;
@@ -605,9 +624,13 @@ class Table {
 
         archetypes.sort(sortByWr) // 0: smallest wr
         let frTot = 0
-        //if ( itt % this.plotPoints == 0) { // every 1000 iterations 
-        for (let i=0;i<archetypes.length;i++) { archetypes[i].trace.push(archetypes[i].fr) }
-        //}
+        let digits = itt.toString().length
+        if ( itt % Math.pow(10,digits-2) == 0 || digits < 3 ) {
+            for (let i in archetypes) { 
+                archetypes[i].x.push(itt)
+                archetypes[i].y.push(archetypes[i].fr)
+            }
+        }
         
         for (let i=0;i<archetypes.length;i++) {
 

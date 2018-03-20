@@ -7,6 +7,7 @@ class LadderWindow {
 
     constructor(callback) {
 
+        this.name = 'ladderWindow'
         this.div = document.querySelector('#ladderWindow')
         this.tab = document.querySelector('#ladder.tab')
         this.chartDiv = document.querySelector('#ladderWindow #chart1')
@@ -590,7 +591,7 @@ class LadderWindow {
             margin: MOBILE ? {l:10,r:10,b:35,t:0,} : {l:60,r:30,b:50,t:0,},
             xaxis: {
                 range: [0,1.05],
-                title: 'Winrate',
+                title: 'Power Score',
                 zeroline: false,
                 fixedrange: true,
                 tickvals: [0,0.25,0.5,0.75,1.0],
@@ -603,7 +604,7 @@ class LadderWindow {
 
             yaxis: { 
                 range: [0, 1.05],
-                title: 'Frequency',
+                title: 'Frequency Score',
                 zeroline: false,
                 fixedrange: true,
                 tickvals: [0,0.25,0.5,0.75,1.0],
