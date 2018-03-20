@@ -20,7 +20,7 @@
             #updateTimeDiv
                 display none
             .navbar
-                height: 8vh !important
+                height: auto !important //8vh !important
                 max-width: 100%
                 overflow: hidden
                 #mobileFolder
@@ -28,12 +28,11 @@
                     display inline
                 .mobileTabs
                     display flex
+                    .tab
+                        padding 0.7rem
                 .tabs
                     display none
                     width 100%
-            
-                
-
 
             .content-wrapper
                 #loader
@@ -55,10 +54,12 @@
                         display none
                 .content
                     height: 87vh !important
-                    .question
-                        right none
-                        left 1rem !important
-                        
+                    width 100% !important
+                    left 0 !important
+                    .explain
+                        display none
+                    .collapse
+                        display block
                     .chart-header
                         font-size 90%
                     .chart
@@ -69,15 +70,7 @@
                         margin 0 !important
                         .legend-item
                             height auto !important
-                    .content-middle // deckswindow
-                        overflow-x visible !important
-                        .descriptionBox
-                            width 85%
-                            position absolute
-                            .description
-                                width 100%
-                        .deckBox
-                            overflow-x hidden
+                        
                     
                     
                 .content-footer
@@ -88,3 +81,16 @@
                         display none
                     #plotBtn
                         display: inline
+                        
+
+                    
+                                
+
+
+
+
+
+
+
+
+

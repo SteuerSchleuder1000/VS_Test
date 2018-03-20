@@ -4,18 +4,19 @@ $deckTitle-height = 2.8rem
 $decklist-width = 12rem
 
 .decklists
-    display: none
-    display block 
-    //grid-column-gap 1.5rem
+    display none
     margin-top 1.5rem
     height $decklists-height
     position relative
+    white-space nowrap
     .deckBox
+        white-space pre-wrap
         height $decklists-height
         position relative
         overflow-y hidden
         display inline-block
         width $decklist-width
+        max-width $decklist-width
         margin-left 1rem
         .deckTitle
             display inline-block
@@ -36,12 +37,13 @@ $decklist-width = 12rem
             .titleHover
                 opacity 0
                 height $deckTitle-height
-                width 12rem
+                width 100%
                 position absolute
                 top 0
                 line-height $deckTitle-height
                 .titleHover-content
                     display inline-block
+                    position absolute
                     padding-left 1rem
                     padding-right 1rem
                     margin 0.15rem
@@ -53,7 +55,7 @@ $decklist-width = 12rem
                     border-radius 3%
                     vertical-align middle
                     &.right
-                        float right
+                        right 0
                     &.left
                         float left
                     &:hover

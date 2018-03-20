@@ -120,12 +120,12 @@ class App {
 
     startAnalytics(p) { 
         console.log('start analytics with prob interval',p)
-        window.setInterval( app.analytics , 30*1000) 
+        window.setInterval( app.analytics ,5*1000) // call analytics every 5 seconds
     }
 
     analytics() {
         let random = Math.random()
-        if ( random > app.p ) { return }
+        if ( random > app.p ) { return } // app.p = probability of uploading within X seconds
         //console.log('uploaded',random,app.p)
 
         let w = app.path.window
@@ -144,7 +144,7 @@ class App {
         for (let key in info) { if (info[key] == undefined) {info[key] = '' } }
 
         //console.log(info)
-        app.fb_db.ref('analytics/data/'+utc).set(info)
+        //app.fb_db.ref('analytics/data/'+utc).set(info)
     }
 
 }// App

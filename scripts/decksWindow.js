@@ -16,7 +16,10 @@ class DecksWindow {
         this.description = document.querySelector('#decksWindow .content .descriptionBox .description')
         this.overlayDiv = document.querySelector('#decksWindow .overlay')
         this.overlayP = document.querySelector('#decksWindow .overlayText')
-        this.questionBtn = document.querySelector('#decksWindow .question')
+        this.questionBtn = document.querySelector('#decksWindow .question.explain')
+        this.expandBtn = document.querySelector('#decksWindow .expand')
+        this.collapseBtn = document.querySelector('#decksWindow .collapse')
+        this.contentLeft = document.querySelector('#decksWindow .content-left')
 
         this.subWindows = [this.descriptionBox, this.decksDiv ,this.chartDiv] // depending on mode
         
@@ -73,18 +76,33 @@ class DecksWindow {
         }}
 
         this.setupUI()
-        this.questionBtn.addEventListener('click',this.toggleOverlay.bind(this))
-        this.overlayDiv.addEventListener('click',this.toggleOverlay.bind(this))
+        this.questionBtn.onclick = this.toggleOverlay.bind(this)
+        this.overlayDiv.onclick = this.toggleOverlay.bind(this)
+        if (MOBILE) {
+            this.collapseBtn.style.display = 'block'
+            this.expandBtn.onclick = this.expandContentLeft.bind(this)
+            this.collapseBtn.onclick = this.collapseContentLeft.bind(this)
+        }
+        
 
         if (callback != undefined) { callback() }
     }// close constructor
 
+    expandContentLeft() { 
+        this.collapseBtn.style.display = 'block'
+        this.expandBtn.style.display = 'none'
+        this.contentLeft.style.display = 'block' 
+    }
+    collapseContentLeft() { 
+        this.collapseBtn.style.display = 'none'
+        this.expandBtn.style.display = 'block'
+        this.contentLeft.style.display = 'none'
+    }
 
 
     setupUI() {
         this.dropdownFolders = {
             format: document.querySelector('#decksWindow .content-header #formatFolder .dropdown'),
-            class: document.querySelector('#decksWindow .content-header #classFolder .dropdown'),
         }
 
         let mouseOut = function(event) { 
@@ -104,8 +122,7 @@ class DecksWindow {
         this.compareBtn.active = false
 
         this.selection = {}
-        this.selection.div = document.querySelector('#decksWindow .selectionWrapper')
-        this.selection.buttonWrapper = document.querySelector('#decksWindow .selectionWrapper .buttonWrapper')
+        this.selection.buttonWrapper = document.querySelector('#decksWindow .buttonWrapper')
         this.selection.buttons = []
 
 

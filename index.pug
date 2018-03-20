@@ -161,21 +161,6 @@ html(lang='en')
               button#description.optionBtn Text
               button#decklists.optionBtn Decks
               button#dustWr.optionBtn Dust
-              #classFolder.option-folder
-                button#classBtn.folder-toggle Druid
-                .dropdown.hidden
-                  button.optionBtn.folderBtn Classes
-                  button.optionBtn.folderBtn Meta
-                  button.optionBtn.folderBtn Special
-                  button#Druid.optionBtn.folderBtn Druid 
-                  button#Hunter.optionBtn.folderBtn Hunter 
-                  button#Mage.optionBtn.folderBtn Mage
-                  button#Paladin.optionBtn.folderBtn Paladin
-                  button#Priest.optionBtn.folderBtn Priest
-                  button#Rogue.optionBtn.folderBtn Rogue
-                  button#Shaman.optionBtn.folderBtn Shaman
-                  button#Warlock.optionBtn.folderBtn Warlock
-                  button#Warrior.optionBtn.folderBtn Warrior
             .displayOptions.optionBar
               button#info.optionBtn Info
               button#compare.optionBtn Compare
@@ -183,10 +168,13 @@ html(lang='en')
           .overlay
             p.overlayText
           .content
-            .question.fa.fa-question-circle
+            .question.explain.fa.fa-question-circle
+            .question.arrow.collapse.fa.fa-arrow-left
+            .question.arrow.expand.fa.fa-arrow-right
+            .question.plus-minus.plus.fa.fa-plus-square-o
+            .question.plus-minus.minus.fa.fa-minus-square-o
             .content-left
-              .selectionWrapper
-                .buttonWrapper
+              .buttonWrapper
               .sidebar.left
             .content-middle
               .descriptionBox

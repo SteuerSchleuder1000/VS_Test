@@ -20,72 +20,74 @@
         display flex
         flex-flow row
         justify-content space-between
+        .arrow
+            display none
+            left 0.5rem
+        .plus-minus
+            display none
+            left 9rem
         .content-left
+            position relative
             width 12rem
             background-color #dadada
+            padding-top 2.5rem
             .sidebar
-                margin-top 17rem
-            .selectionWrapper
+                margin-top 2rem                
+            .buttonWrapper
                 $selButtonWidth = 2.5rem
-                position absolute
-                width 5*$selButtonWidth 
+                position relative
+                width 100% //5*$selButtonWidth 
                 height auto
-                margin-top 1rem
-                .buttonWrapper
+                //margin-left 0.5rem
+                line-height 2rem
+                .selectionBtn
+                    font-size 0 //1rem
+                    display inline-block
+                    //background-color $accentColor
+                    border 0.3rem solid #0000004d
+                    //padding 0.2rem
                     margin-left 0.5rem
-                    margin-top 1.1rem
-                    line-height 2rem
-                    .selectionBtn
-                        font-size 0 //1rem
-                        display inline-block
-                        //background-color $accentColor
-                        border 0.3rem solid #0000004d
-                        //padding 0.2rem
-                        margin-left 0.5rem
-                        border-radius 0.2rem
-                        line-height normal
-                        opacity 0.4
-                        width $selButtonWidth
-                        height $selButtonWidth
-                        overflow hidden
-                        &.special
-                            width auto //$selButtonWidth*1.3
-                            height $selButtonWidth*0.5 
-                            font-size 1.3rem
-                            margin-left 0.4rem
-                        &:hover
-                            //color $accentColor !important
-                            background-color $darkColor !important
-                            border-color: $darkColor !important
-                            cursor pointer
-                        &:active
-                            background-color yellow !important
-                            border-color: yellow !important
-                        &.highlighted
-                            opacity 1
-                            &.classIcon
-                                width $selButtonWidth + 2 * 0.3rem
-                                height $selButtonWidth + 2 * 0.3rem
-                                border none !important
-                            
-                            //font-size 1.3rem
+                    border-radius 0.2rem
+                    line-height normal
+                    opacity 0.4
+                    width $selButtonWidth
+                    height $selButtonWidth
+                    overflow hidden
+                    &.special
+                        width auto //$selButtonWidth*1.3
+                        height $selButtonWidth*0.5 
+                        font-size 1.3rem
+                        margin-left 0.4rem
+                    &:hover
+                        //color $accentColor !important
+                        background-color $darkColor !important
+                        border-color: $darkColor !important
+                        cursor pointer
+                    &:active
+                        background-color yellow !important
+                        border-color: yellow !important
+                    &.highlighted
+                        opacity 1
+                        &.classIcon
+                            width $selButtonWidth + 2 * 0.3rem
+                            height $selButtonWidth + 2 * 0.3rem
+                            border none !important
                         
-                &:hover
-                    .selectionImg
-                        opacity 0.1
-                    .selectionTitle
-                        color black
-                        
-        .content-right
-            width 10rem
-        // .sidebar in 03_components                  
+                        //font-size 1.3rem
+                    
+            &:hover
+                .selectionImg
+                    opacity 0.1
+                .selectionTitle
+                    color black
+                                       
         .content-middle
             //.decklists has own .styl file
-            margin-left 1.5rem
             overflow-x auto
             margin-right 1rem
-            width 75%
+            width auto
             height 100%
+            position relative
             //margin auto
             .chart
                 display none
@@ -123,8 +125,41 @@
             
 
 
-// @media (max-width: 756px)
-//     .content
-//         .content-middle
-//             overflow-x visible
-            
+@media (max-width: 756px)
+    #decksWindow
+        .content
+            .content-left
+                //width 10rem
+                overflow hidden
+                .buttonWrapper
+                    $selButtonWidth = 1.7rem
+                    $selBorderWidth = 0.2rem
+                    .selectionBtn
+                        height: $selButtonWidth
+                        width: $selButtonWidth
+                        border-width $selBorderWidth
+                        &.special
+                            font-size 1rem !important
+                            height 1rem !important
+                        &.highlighted.classIcon
+                                width $selButtonWidth + 2*$selBorderWidth
+                                height $selButtonWidth + 2*$selBorderWidth
+                .sidebar
+                    overflow-x hidden
+                    overflow-y auto
+                    margin 0
+                    padding 0
+                    padding-left 0.2rem
+            .content-middle
+                margin 0
+                width 100%
+            margin-right 0.2rem
+            .descriptionBox
+                padding 0.5rem                
+            .decklists
+                margin-top 2.5rem
+                margin-left 0.5rem
+                width 100%
+                .deckBox
+                    overflow hidden
+                    width 10rem

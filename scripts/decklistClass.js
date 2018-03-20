@@ -361,7 +361,8 @@ class Sidebar {
         let wrDiv = document.createElement('div')
         wrDiv.className = 'wrDiv'
         //wrDiv.innerHTML = (100*hsArch.wr).toFixed(1)+'%'
-        wrDiv.innerHTML = 'Tier '+tier_classifier(hsArch.wr)
+        let tier = (MOBILE) ? 'T ' : 'Tier '
+        wrDiv.innerHTML = tier + tier_classifier(hsArch.wr)
         
 
         btnWrapper.appendChild(btn)

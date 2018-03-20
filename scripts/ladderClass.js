@@ -482,9 +482,6 @@ class Ladder {
         let r = this.window.r
         let tableData = app.ui.tableWindow.data[this.f][table_times[0]][table_ranks[0]]
         if (tableData == null) { console.log('ERROR table not loaded for Meta Score') }
-        //     let callback = function() { app.ui.ladderWindow.plot() }
-        //     app.ui.tableWindow.data.load('Wild',callback) 
-        // }
         
         this.traces.map[r] = []
         let table = tableData.table
