@@ -130,11 +130,10 @@ class Ladder {
                 // Merge
                 if (fr < this.fr_min && i>8) {
                     this.traces.bar.decks[classIdx].y[rank] += fr
+                    fr = 0
                 }
-                else {
-                    fr_avg += fr
-                    archFr.push(fr)
-                }
+                fr_avg += fr
+                archFr.push(fr)
                 
                 for (let bracket of this.rankBrackets) {
                     if (rank == bracket.start) {
