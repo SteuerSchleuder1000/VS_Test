@@ -142,6 +142,14 @@ class Ladder {
                 archFr_raw.push(fr)                
                 archTxt.push(`<b>${arch.name}     </b><br>freq: ${(fr*100).toFixed(1)}%`)
 
+
+                // test
+                if (fr < this.fr_min && i>8) {
+                    this.traces.bar.decks[classIdx].y[rank] += fr
+                    fr = 0
+                }
+                fr_avg += fr
+                archFr.push(fr)
                 
 
 
@@ -159,7 +167,7 @@ class Ladder {
                         this.traces.pie.decks[bracket.name][0].values[i] /= (bracket.end - bracket.start + 1)
                         archFr_brackets[bracket.name] = this.traces.pie.decks[bracket.name][0].values[i]
 
-                        // Merge Pie
+                        // test Pie
                         let fr_pie = this.traces.pie.decks[bracket.name][0].values[i]
                         if (fr_pie < this.fr_min && i>8) { // if pie is smaller than fr_min and not 'Other'
                             this.traces.pie.decks[bracket.name][0].values[i] = 0
@@ -168,7 +176,7 @@ class Ladder {
                     }
                 } // for brackets
 
-                // Merge
+                // test
                 // if the archetype frequency is below this.fr_min and it's not 'Other'
                 // -> add the fr to 'Other' of that class
                 if (fr < this.fr_min && i>8) { 
@@ -477,7 +485,7 @@ class Ladder {
 
     annotate(bool) {
         var plotType = this.window.plotType
-        if (plotType == 'pie' || plotType == 'number' || plotType == 'timeline' || plotType == 'map') {return}
+        if (plotType == 'pie' || plotType == 'number' || plotType == 'timeline' || plotType == 'map') {return}
         var update
         var heights = {
             bar: 0.5,
