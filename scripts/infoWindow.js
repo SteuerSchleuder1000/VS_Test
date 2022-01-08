@@ -12,6 +12,13 @@ class InfoWindow {
         this.text =`
                 Greetings and thank you for checking out the VS Live!<br><br>
 
+                    <b>Update 2.1</b><br><br>
+
+                    - New 'Trends' feature in the Tier List tab<br>
+                    - Added meta polarity in table view<br>
+                    - Bug fixes and improvements<br><br><br>
+
+
                     <b>Update 2.0:</b><br><br>
 
                     - New Power Score plot in the overview tab.<br>

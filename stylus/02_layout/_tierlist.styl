@@ -28,6 +28,8 @@
         .dispOptions
             position absolute
             right 0
+        #rankFolder
+            display none
     .chart-footer
         position absolute
         bottom 0
@@ -66,6 +68,19 @@
             &:hover
                 cursor pointer
                 color $darkColor !important
+                background-color $accentColor !important
+
+        .sortBtn
+            opacity 0.4
+            color $darkColor
+            border solid 0.1rem $darkColor
+            border-radius 0.2rem
+            height 1.2rem
+            &:hover
+                opacity 1
+                cursor pointer
+                color $darkColor !important
+                border solid 0.1rem $accentColor
                 background-color $accentColor !important
         .winrate
             color #999

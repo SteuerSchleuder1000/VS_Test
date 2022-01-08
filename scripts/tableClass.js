@@ -17,7 +17,9 @@ class Table {
         this.fontColor = '#22222'
         this.subplotRatio = 0.6
         this.overallString = '<b style="font-size:130%">Overall</b>'
-        this.minGames = 50 // minimum number of games to be displayed in chart
+        this.minGames = 1 // minimum number of games to be displayed in chart
+        this.polarization = 0
+        this.diversity = 0
         this.whiteTile = 0.50000001
         this.blackTile = 0.51
         let cs_1 =  [ // Green Blue
@@ -53,9 +55,10 @@ class Table {
         this.frequency = []
         this.archetypes = []
         this.archetypes_m = [] // shortened names
-        this.classPlusArch = [] // needed for Class Sort
+        //this.classPlusArch = [] // needed for Class Sort
         this.winrates = []
         this.totGames = 0
+        this.frSum = 0 // 
         this.download = ''
 
         if (DATA == undefined) { 
@@ -69,11 +72,18 @@ class Table {
         let ARCHETYPES =    DATA.archetypes.slice()
 
         this.numArch = Math.min(this.numArch, ARCHETYPES.length)
-
+        
         // this.m_raw =    DATA.table.slice()
         // this.fr_raw =   Data.frequency.slice()
         // this.arch_raw = Data.archetypes.slice()
-    
+        
+
+        for (let f of FR) { 
+            this.frSum += f
+            this.diversity += Math.pow(f,2)
+        }
+        this.frSum = Math.max(this.frSum, 1)
+        this.diversity = 1-this.diversity/Math.pow(this.frSum,2)
 
         // Take only the most common
         var idx_f = range(0,FR.length)
@@ -105,7 +115,7 @@ class Table {
             this.frequency.push(FR[x])
             this.archetypes.push(ARCHETYPES[x][1]+" "+ARCHETYPES[x][0])
             this.archetypes_m.push(ARCHETYPES[x][1].slice(0,2)+" "+classAbr[ARCHETYPES[x][0]])
-            this.classPlusArch.push(ARCHETYPES[x][0]+ARCHETYPES[x][1])
+            //this.classPlusArch.push(ARCHETYPES[x][0]+ARCHETYPES[x][1])
                 
         
             for (var j=i;j<this.numArch;j++) {
@@ -141,19 +151,22 @@ class Table {
                 var hero =  ARCHETYPES[x][1]+" "+ARCHETYPES[x][0]
                 var opp = ARCHETYPES[y][1]+" "+ARCHETYPES[y][0]
                     
-                this.table[j][i] = 1-wr
                 this.table[i][j] = wr
+                this.table[j][i] = 1-wr
+                
                 this.totGames += totGames
                 if (totGames >= this.minGames) {
                     this.textTable[i][j] =`${hero}<br><b>vs:</b> ${opp}<br><b>wr:</b>  ${(wr*100).toFixed(1)}%  (${totGames})`           
                     this.textTable[j][i] =`${opp}<br><b>vs:</b> ${hero}<br><b>wr:</b>  ${((1-wr)*100).toFixed(1)}%  (${totGames})`
                 } else {
-                    this.textTable[i][j] =`${hero}<br><b>vs:</b> ${opp}<br><b>wr:</b>  Not enough games`           
-                    this.textTable[j][i] =`${opp}<br><b>vs:</b> ${hero}<br><b>wr:</b>  Not enough games`
+                    this.textTable[i][j] =`${hero}<br><b>vs:</b> ${opp}<br><b>wr:</b>  Low Data (${totGames})`           
+                    this.textTable[j][i] =`${opp}<br><b>vs:</b> ${hero}<br><b>wr:</b>  Low Data (${totGames})`
                 }
-        
             }
         }// close Process Data
+
+        
+        
 
         // Calculate Winrates
         var freqSum = 0;
@@ -165,6 +178,15 @@ class Table {
             var wr = 0
             for (var j=0;j<this.numArch;j++) {wr += this.table[i][j]*this.frequency[j]}
             this.winrates.push(wr/freqSum)
+        }
+
+        // Polarization
+        for (let i=0; i < this.numArch; i++) {
+
+            for (let j=i+1; j < this.numArch; j++) {
+                let p = this.frequency[i]*this.frequency[j]*Math.abs(this.table[i][j]-0.5)
+                this.polarization += 2*p/Math.pow(freqSum,2) //freqSum/freqSum
+            }
         }
         
     
@@ -206,16 +228,14 @@ class Table {
 
 
 
-    getFreqPlotData(freq, archetypes) {
+    getFreqPlotData() {
 
-        var freq = this.frequency.slice()        
-        var freqSum = 0
-        var text = []
-    
-        for (var i=0;i<freq.length;i++) {freqSum+=freq[i]}
-        for (var i=0;i<freq.length;i++) {
-            freq[i] = freq[i]/freqSum
-            text.push("FR: "+(100*freq[i]).toFixed(1)+"%")
+        let freq = []
+        let text = []
+        for (let f of this.frequency) {
+            f /= this.frSum
+            freq.push(f)
+            text.push('FR: '+(f*100).toFixed(1) + '%')
         }
     
     
@@ -232,7 +252,7 @@ class Table {
     
 
     plot() {
-
+        console.log('diversity, polarization: ',this.diversity+', '+this.polarization)
         if (this.window.mode == 'simulation') { return this.simulation() }
 
         if (this.sortBy == '' || this.sortBy != this.window.sortBy) { this.sortTableBy(this.window.sortBy, false) }
@@ -245,7 +265,9 @@ class Table {
         let textTable = this.textTable.concat([textRow])
 
         for (var i=0;i<table[0].length;i++) { 
-            textRow.push(`${this.archetypes[i]}<br>Overall wr: ${(100*this.winrates[i]).toFixed(1)}%`) 
+            let wr = (100*this.winrates[i]).toFixed(1) + '%'
+            let fr = this.frSum ? (100*this.frequency[i]/this.frSum).toFixed(1) + '%' : 0
+            textRow.push(`${this.archetypes[i]}<br>Frequency: ${fr}<br>Overall wr: ${wr}`) 
         }
 
         
@@ -305,7 +327,8 @@ class Table {
         document.getElementById('loader').style.display = 'none'
 
         this.window.nrGames = this.totGames
-        this.window.setTotGames()
+        this.window.setTotGames() // also set polarisation, diversity
+        
     }
 
     // add frequency line plot to chart
@@ -376,6 +399,16 @@ class Table {
     }
 
 
+    skill() {
+        let table = this.table
+        for (let i in table) {
+            let wins = table[i][i][0]
+            let loss = table[i][i][1]
+
+            let c = wins/(wins+loss)
+        }
+    }
+
 
     zoomOut () {
         var layout_zoomOut = {
@@ -413,12 +446,12 @@ class Table {
         var sortByMU = function (a,b) {return self.table[zoomIdx][a] > self.table[zoomIdx][b] ? -1: self.table[zoomIdx][a] < self.table[zoomIdx][b] ? 1 : 0 ;}
         var sortByWR = function (a, b) { return self.winrates[a] > self.winrates[b] ? -1 : self.winrates[a] < self.winrates[b] ? 1 : 0; }
         var sortByFR = function (a, b) { return self.frequency[a] > self.frequency[b] ? -1 : self.frequency[a] < self.frequency[b] ? 1 : 0; }
-        var sortByClass = function (a, b) { return self.classPlusArch[a] < self.classPlusArch[b] ? -1 : self.classPlusArch[a] > self.classPlusArch[b] ? 1 : 0; }
+        //var sortByClass = function (a, b) { return self.classPlusArch[a] < self.classPlusArch[b] ? -1 : self.classPlusArch[a] > self.classPlusArch[b] ? 1 : 0; }
 
         if (what == 'winrate') {idxs.sort(sortByWR)}
         if (what == 'matchup') {idxs.sort(sortByMU)}
         if (what == 'frequency') {idxs.sort(sortByFR)}
-        if (what == 'class') {idxs.sort(sortByClass)}
+        //if (what == 'class') {idxs.sort(sortByClass)}
         
 
         var table = []
@@ -427,12 +460,12 @@ class Table {
         let archetypes_m = []
         var frequency = []
         var winrates = []
-        var classPlusArch = []
+        //var classPlusArch = []
 
         for (let i of range(0,this.numArch)) {
             var idx = idxs[i]
             
-            classPlusArch.push(this.classPlusArch[idx])
+            //classPlusArch.push(this.classPlusArch[idx])
             archetypes.push(this.archetypes[idx])
             //archetypes_m.push(this.archetypes_m[idx])
             frequency.push(this.frequency[idx])
@@ -455,7 +488,7 @@ class Table {
         this.textTable = textTable
         this.archetypes = archetypes
         //this.archetypes_m = archetypes_m
-        this.classPlusArch = classPlusArch
+        //this.classPlusArch = classPlusArch
         this.frequency  = frequency
         this.winrates  = winrates
         this.sortBy = what
@@ -645,6 +678,38 @@ class Table {
             for (let j=i+1; j<archetypes.length;j++) { archetypes[j].fr += d_fr_prop }
         }
         archetypes.sort(sortByIdx)
+    }// eq_fr
+
+
+    pca() {
+
+        this.window.mode = 'pca'
+        let table = this.table
+        let vector_mean = [] // mean values of the columns
+        let n = table.length // matrix dimension
+
+        for (let i in table) {
+            let mean = 0
+            for (let j in table) { mean += table[j][i] }
+            vector_mean.push(mean/n)
+        }
+
+        let m = [] // matrix
+        for (let row of table) {
+            let row_mean = []
+            for (let i in row) { row_mean = (row[i] - vector_mean[i])/(n-1) }
+            m.push(row_mean)
+        }
+
+        // transpose
+        let m_t = m[0].map((x,i) => m.map(x => x[i]))
+
+        // covariance matrix
+        let m_cov = matrixXmatrix(m_t, m) // already multplied by 1/(n-1) two steps before
+
+        // eigenvalues, vectors
+        
+        
     }
 
 }// close Table

@@ -1,0 +1,793 @@
+flower set
+
+In the gardens of PW is a leisure plane. The residents are tasked to take care of the 
+park like world but within fields of flowers, seas, temples, giant trees,
+something is corrupting the flora and black thorns are beginning to spread.
+
+The Garden is sized up so that flowers become trees, birds dragons and mice monsters
+There are zoos, ships, libraries, botanica, planetaria, 
+
+https://en.wikipedia.org/wiki/List_of_garden_types
+
+Aspects:
+
+- Building blocks: stones, water, grass, trees, flowers, sand, 
+- one central "castle"
+- "Wild" gardens
+- horse races? > race cars?
+- olympia >> spear throwing, discus, 
+- Rivers + Sea moore
+- Fields of flowers
+- Exotic greenhouses
+- Zoo >> Giant ape, avitarium, 
+- statues, pillars, monuments, 
+- wind mill, aquaeduct, pathways
+- asian stone garden
+- labyrinth
+- fruit, wine production
+- wine yard
+- lamps, glowing flowers?
+- exotic farns, bananas, 
+- fountain, waterfall
+- buterfly
+- pottery
+- black thorns >> black insects?
+- planting seeds, 
+- nests (bees, birds)
+- stones across pond
+- bridges
+- rain
+- wood prodcution (compostation)
+- king
+- underground tunels,
+- trimming swords, scissors,
+- cactus
+- nectar, honey
+- digging
+- weed removal >> gardeners
+- sun dial
+- clock tower
+- vines on walls
+- roots
+- fungus
+- chess board
+- flamingos
+- polo
+- racing track
+- waterways 
+
+
+
+
+roles:
+
+- weed removal
+- trimming
+- fight pests
+- composting
+- fertilization?
+- masonery (statues, pathways, bridges)
+- water systems (cleaning, filtering)
+- planting >> riding bees,
+- wine, fruit production >> nectar
+- tunneler >> rotfarm, canalization, housing?, fungus farm, 
+- mud >> pottery
+- 
+
+
+- tending to animals? (zoo, horse races, insect eggs)
+
+
+actions:
+- digging
+- watering
+- building > roads, pipes, statues
+- planting
+- cutting > labyrinth, bonsai, grass
+- weeding
+- proping
+- harvesting > fruits, corn
+- stone garden
+- fishing
+- vintner
+- processing
+- egg hatching
+- insect training
+- hercules
+- bug
+- fertilization
+- composting
+- flower
+- cleaning
+- planing
+- imker > harvesting honey
+- 
+
+
+
+
+insects
+- ladybug
+- Grasshopper
+- ant
+- centipede
+- spider
+- fly
+- bee
+- wasp
+- flea
+- moth
+- butterfly
+- scorpion
+- mosquito
+- cricket
+- dragonfly
+- waterbug
+- mantis
+- caterpillar
+- egg, larvae
+- camoflage > leaf, branch
+- cockroach
+- 
+
+critters
+- modular
+- mole
+- frogs
+- fish
+- eichhörnchen
+- hedgehog
+- bird > chicken
+
+
+
+
+creatures:
+- 1 king
+- humans, elves, faeries, kobolds, 
+- sheep, chicken, frogs
+- insects >> bees, hercules, butterfly, dragonfly, 
+- unwanted guests: worms, snails, mice
+- birds >> kolibri
+- fish
+- ape (GIANT)
+- plants > carnivorous, sentient flowers
+- black thorns
+
+
+
+mechanics
+- land matters? tending to lands?
+- insects
+- plants >> thorns >> occupy land?
+- size?
+- growth
+- Blossoms, pollen
+
+
+var 1
+
+- gw: planters on bees >> pollen, nectar farming, seed planting, cut
+- ur: wine production, greenhouse?
+- rw: Masoneers: fight pests, build, fix, 
+- gb: composters: care to roots, farm fungus, compost, fertilize 
+- ub: water system >> tunnels, aquaeduct, canals, pipes, wells, fountains, clean water, filtering. fish
+>> ub undefined
+
+
+var 2:
+
+- gw planters
+- ur wine
+- ug water
+- rw fighters
+- b thorns
+
+
+var 3:
+- gw plant
+- uw mason
+- ur brewerie >> beer, wine, nectar, bakery, cooking, library
+- gr zoo > birds, ape, race, fauna control, egg hunting, greenhouse
+- b compost, thorns
+
+
+var 3:
+- wu: masoneers + water system
+- ur wine
+- gw plant
+- gb: compost
+- rb thorns?
+
+
+
+wu: masoneers, fountains, rivers
+ub: wells, water system, fish
+br: ?
+rg: zoo >> landscapers   
+gw: planting, pollen, trimming, 
+wb: ? stone garden
+bg: composting 
+gu: ponds, rivers, water system, greenhouse, planting
+ur: greenhouse, wine, harvest
+rw: masoneering
+
+
+>>> var 1
+gw, ur, ub, gb, wr
+
+>>> var 3
+gw, uw, ur, rg, b
+
+
+gw: humans, satyr, plant
+uw: humans, bird
+ur: goblins, ??
+rg: satyr, humans, goblins
+b: plant, fungus, ink
+>> rg and ur not enough diversity
+
+
+
+ideas
+
+pollen collector        flying human on kolibri or bee
+fountain architect      blue aven, mason
+nectar transporter      w/g flying bee
+golden planter          green satyr
+Pest fighters           r/g goblin with machete 
+snail patrol            green 
+face carver             white mason
+Waterway cartographer   blue mason
+stone transport         stones transported by giant koij
+infected spider         green spider with black activation
+fungus farmer           black goblin
+zoo soldier             green satyr
+bird cage guard         red > play chicken from hand
+carnivorous plant       green defender with red activation
+chicken                 red dragon without flying >> egg token
+tunnel rat
+deadwood elemental 
+woodworkers             red green satyrs cutting giant tree
+flower knight           white knight plant
+seed canon              white human shooting seeds
+vintner                 blue red goblin with aquired taste
+egg hunters             red humans stand before giant nest
+forbidden knowledge     black book with ink counters 
+bee egg tender          green human in front of hundreds of eggs
+Dragonfly knight        green white knight carrying nectar 
+statue of virtue        artifact >> transform into a 20/20 creature
+climb the pillars       white spell path around pillars with stones
+earth worm              black worm
+poisoned water          black spell 
+grape harvester         blue red goblin collecting 
+fish feeder             blue bird throwing bread into pond 
+infected frog           blue frog
+into the well           blue mill spell
+path maker              white mason creating street
+pipe melder             red goblin hammering on wooden grape syrup pipe 
+goblin librarian        red blue goblin overseeing the giant recipe book 
+cook                    blue goblin over giant cauldron
+spider hunter           green human fighting spiders
+stone gardener          white mason tending to japanese style stone garden 
+potter                  blue potter > synergy with mason and grape 
+king of it all          wurbg infected weak sleeping 
+curious koj             fish 
+digger                  goblin on mole digging 
+bushcutter              goblin axing down weed 
+glow of golden roses    spell depicting glowing blossoms in the night
+root out                red spell removing plant ?
+moonshine larva         blue insect eating leaves > transform into butterfly
+Grasshopper knight      red green human with conditional flying
+Giant melon             red blue 0/5 melon with defender> when dies give +1/+1 counters
+
+
+
+locations:
+central castle with library
+kitchen 
+greenhouse
+tree trunk city 
+water ways beneath the well 
+flower fields 
+bakery/ brewery, 
+labyrinth
+
+
+
+
+mechanics
+
+gw tokens    raid leader ara 
+wu grind     high architect Orona
+ur trick     ceo jdko
+rg ramp      landscaper omo
+
+gw: plant, insects, blossom, land 
+growth, saproling, seed >> plant
+level up 
+investment > payoff
+exile card face down > condition > play
+blossom 
+convoke, populate,
+defender plants,
+GARDEN: choose one: put a +1/+1 counter on up to 2 plant creatures you control or put 2 0/1 plant tokens into play
+entwine
+
+
+wu mason, fish, ponds, fountain heads, shape
+brick counters, mill, artifact counters, structure >> land 
+surveil,
+num cards in hand
+transform other cards >> put counters on, shape deck 
+counter on lands >> mana?, ab mechanic?, 
+shape >> loot 
+transport >> tap untap 
+pathmaker >> vigilance? >> unblockable?
+put a card from hand onto the deck 
+enchantment?
+planing > scry? > order? 
+multi key words > mastery (if this creature has at least 2 instances of flying, vigilance, firstrike or lifelink)
+source > when targeted give source hexproof?
+lifegain?
+landfall? >> more narrow (islandfall, plainsfall, basicland fall)
+flood > when island enters >> islandwalk
+tide > when plains enters >> vigilance, flying
+imprint land >> plan
+entwine
+
+
+
+ur: grape, harvesting, processing, birds, juice
+remix cards in grave, machinery, energy boost, 
+recipe >> effect (exile the follwing cards from hand, grave)
+mode >> level up >> high energy 
+drink something >> effect 
+harvest >> double tap land 
+kicker 
+special spells > effect
+harvesting technology > animal + wood + pipes, 
+GIANT fruits
+swap attack, def
+juice up (put 3 +1/+1 counters on this. remove 1 of them at the beginning of your turn)
+fruit spells (supbtype) >> +1/+1 counters + effect
+revell >> whenever one or more +1/+1 counters are placed on this >> effect
+entwine
+enters with +1/+1 counter -> remove to gain effect, effects that give counters
+
+
+
+rg: landscapers, zoo, rhode, root out, woodcutters, harvest
+play creatures from hand 
+look at the top of deck > creature you may play
+competition > eot highest power > effect 
+land mechanic > terraform > sacc land search for another
+digging
+cut trees
+new earth
+num of lands you control 
+out root > cascade for lands
+sac lands, cut, 
+animate land 
+landdredge
+discard land >> effect >> bring basic lands to hand
+imprint a land >> effect >> tap for that color
+entwine
+X spells >> increases x for each spell this turn
+fruits
+spider weave
+
+
+
+b: infecting, poison, slow > ink counter 
+for each ink counter +1/-1
+mana fix? 
+remove land from grave 
+wither 
+FLASHY >>> activated, new frame? thorns
+when thorned > deathtouch? > deal 2 damage? afflict
+when it dies afflict other creature 
+thorn echantments > when enchanted creatures leaves the battlefield attach this to another creature you control
+enchanted created has +2/-2
+GY interaction? > remove a card > +1/+1 counters (reverse )
+manifest from grave
+modular > when this dies put a 0/0 with x +1/+1 counters into play
+        > when this dies put x 1/1 fungus into play
+risk > toughness 1 + indestructible + lose life equal to damage dealt to it...
+token myco enchantment 
+put 3 +1/+1 counters on this. remove 1 of them at the beginning of your turn, damage
+
+
+
+
+28/11/2018
+- garden set
+- color pairs: wg, wu, ur, rg, b
+- garden keyword (0/1 plant tokens or +1/+1 counters)
+- entwine
+- juice up (+1/+1 on creature then remove one a turn)
+
+
+30/11/2018
+
+- more focus on insects
+- 5 different garden types?
+
+
+
+25/4/2019
+
+- insect set >> humans, goblins, elves, 
+garden world > purpose? > recreation > architecture, wine, fruits
+    gw: planting, cutting, harvesting, fertilizing, knights
+    uw: building, watering
+    ur: 
+    rg: defending, 
+
+
+
+christams set
+
+brainstorm:
+Santa Clause, Christmas Tree, Presents, Snow, Stars, Cookies, Elves, Music, Fireside, Singing, Bells,
+Sugar, Milk, Mandarins, krampus, coal, manufactoring, north pole, baking, freezing cold, christmas tree globes,
+charles dickens, Scrooge, ghosts (of christmas), rendeers, Jack Frost, snowman, penguine, ice bear, 
+talking animals, snow star, socks, gold, colors, grinch, children, book, aurora borealis, wine, forest,
+kitchen, oven, glitter, lamella, angels, 
+
+
+factions
+- santa clause, elves   >>> coca cola 
+- krampus,              >>> pagean
+- Ghosts of christmas   >>> charles dickens
+- ice spirits           >>> nature, winter
+- 
+
+
+
+
+
+story scenes: [annoectodes]
+THE VAULT
+- Kea has the glass key to the vault underneath Prague -> now she needs to get there:
+Going down the aquaducts >> glowing floating fish light the way >> illusions guard the vault
+deep down the shaft where air is difficult to breath they encounter the roots of the city tree
+and a labyrinth ever changing it's layout >> kea can use her powers wisely
+
+But somebody is following them. Their disguise above has failed >> the sphinx god himself is on the way
+kea is inside the glass vault the crown of glass within her reach when the sphinx lands and sends tremors
+throught the caverns. The crown descends into the abyss
+Kea has to face the god or her team will be lost. When she walks outside the walls of the labyrinth have 
+vanished and the team faces the sphinx and her knights. The sphinx gives the order and the battle ensues.
+
+The team flees to the vault and Kea pulls them all inside safe from the attackers. The sphinx god begins
+crushing the cube but they find a portal stone in last minute to get out.
+
+They land in a snow storm and Kea reveals the crown.
+
+
+CITY OF BLOSSOMS
+-Kea has entered the city of Blossoms and old Italian city, sunny and friendly. Flower spirits roam about
+and the city is bustling with travelers and sales people. She needs the contact of a librarian only known by
+the code name the black rose. She rents a room and visits an underground boxing match. Kea looks for tatoos.
+Each one tells a story some of them are written in god letters. They tell of a man who saved them from the se
+during a storm. A man who deals with roses. She asks a guy a question. Nothing happens.
+
+The match ends and kea wands to leave. She is stopped and the gang tries to interrogate her. A thorn elemental
+appears as the team leader with the thorns piercing Keas arm even in ghost form. The poison lets her have 
+another vision of the dream god which catapults her back to reality where she beats the thorn elemental.
+It gives her a coin that she has to pay at a local library.
+
+A woman enters the city with a cart full of cages. She gives the unseen beasts within something to
+sniff at and opens the cages.
+
+Kea visits the library. The librarian is actually an ancient ghost kept alive by an eternity stone. He leads
+her in a back room where the schematics for the city of prague are stored. Kea feels something wrong and
+vanishes. The 2 dogs appear bursting through wooden walls. Still injured Kea can not use her full power
+She draws her sword and kills one dog and sends the other down a well.
+
+The woman is pissed when they later pull up a gigantic dog from the well but she now knows where Kea will go
+next. The woman and her poodle walk innto the crowd. The poodle looks sick coughing up black blood and leaving
+behind bushels of his white fur. They encounter Kea who immediatly recognizes the woman.
+
+The poodle transforms into a giant black wolf who oozes black goo from his mouth together they encircle Kea.
+Flower knights appear and also circle kea. The woman can grow body parts.
+The flower knights try to tie Kea down but it helps her escapes to the roofes. Hunted by the bounty hunter
+the wolf and thorns she lets herself fall down into a house. Thorns burst through the side walls breaking 
+open the secret entrance to the boxing area. 
+
+A wounded poisened and tired Kea activates the same trap that knocked her out before and kills the bounty hunter
+
+With the glass key she can now travel to Prgaue.
+
+
+
+CITY OF RUST
+Kea arrives to the bustling city. There's a festival going on with the 7 gods pilgraming through the street
+throwing gold into the crowd. 
+
+Kea wants to make a deal with the god of greed. 
+
+
+
+SPIDER GOD
+A traitor enters the spiders lair. He wants to sell secrets to the spider god. The spider god accepts and
+rewards him. The traitor accepts an new offer to keep an eye on Kea. The spider god produces a wet 
+stone eye from its abdomen and ask him to swallow it. He refuses > the guards take a stick and make him.
+
+The spider agent can retrieve the last moments of a person from his eye.
+
+
+
+the storm gods
+The city is in a giant thunder storm. Mist ghosts roam the streets and witches jump from roof to roof. Kea
+has to escort the wounded architect to the save house. Mist ghosts attack them and a witch hunter comes 
+to the rescue trapping them in his steel cage.
+
+
+Enter the dream
+Kea and yevo + ritualists sit around an eternal and try to enter his mind. They do so by touching his 
+sleeping body. They enter an inception style world where they encounter a hostile soul. Meanwhile in the 
+real world blood from a small cut from the eternal is making it's way to a ritualist and taking over his body.
+
+Kea recognizes the missing ritualist in the dream and wakes up in the last second. The ritualist still 
+seemingly dreaming his holding a knife to yevos throat when kea obliterates him.
+
+This is the moment where the eternal awakens but yevo is able to tie him down.
+
+
+
+The music festival
+In lantern city there's a music festival. Kea and team wander through the main plaza where lanterns are 
+floating in the sky and a band is playing. There is an exchange going to happen and they're looking for a
+guy with green hair. He shows up but takes 2 of Keas team hostage. Kea gives him the golden egg and the 
+green guy vanishes into the crowd as do the hostage takers afterwards. 
+
+Kea follows the green haired guy which is pinned down on the ground. The egg has become incredibly heavy and
+is crushing his hand. Kea takes his backpack and picks up the egg now light again. The crowd has noticed the 
+commotion and is backing up. The guy is furious and gives a signal which makes 10 big guys walk towards Kea
+and team. 
+
+Kea gets a hold of a low floating lantern and begins to climb upwards as they had planed before the exchange.
+The lantern ghost inside shrieks.
+The green haired guy reveals a pair of extra arms and shoots a projectile at the lantern which makes it tilt.
+Befor it crashes in a fiery explosion kea manages to get a hold onto another lantern. The crowd is now in panic
+and disperses. Meanwhile the guy shoots at them.
+
+Kea reaches the big lantern which is towed with big chains and rushes down on one of them. 
+Mission accomplished.
+
+
+
+SNOW FOREST
+Kea and her team arive in the snow withered monastary where they enjoy golden blossom team. The human lord
+who is ensouled with a divine spirit tells her what she needs to know. He has a packet for her that her 
+father left her. She opens it but it's a bomb tearing a giant hole into the monastary. The lord and kea 
+are catapulted out of the building. The lord dies with the spritit splittering.
+
+The honor guards circle her and accuse her of murder. She recognizes that the dream god has set her up
+and flees with her team into a local forest.
+
+There they need to battle a giant black snake.
+
+Afterwards they travel for days to their next destination.
+
+
+
+
+Assaniation in the Waterways
+Kea has infiltrated the oasis and meets up with the local coconspiritor in the waterways.
+His team seems nervous and distrustful but he never the less wants to hand her over the ring.
+But in this moment he is stabbed multiple times by an invisible assailant which also steals the ring.
+
+Kea goes after him following the water splashes. She manages to burn him. She looses him after some time.
+
+Later in court she recognizes the burn mark on one of the judges.
+
+
+
+The falconeer
+Falcon races are popular in bronze city. Kea wants informations from a local sha. He challenges her to a 
+falcon race. The falcons fly around five towers. His falcon has hidden blades on the claws and injures Keas
+falcon. The Sha now in the lead makes an even better offer. Kea agrees.
+
+Her team mate makes the blades grow very heavy which makes the falcon fall to his death and kea wins.
+
+
+
+
+
+black river
+A boy wanders through the markets of an Egyptian city and steals a fish. He runs to the river to 
+bite into it but hesitates. He sees black water running down his feet. More and more of it. Other people
+have noticed it too. The boy sees a rugged something floating to his feet. Bumping into the river quai the
+black object turns over and reveals itself to be a dead body in armor.
+
+Screaming the boy runs back to the market place leaving behind the stolen fish.
+
+
+
+
+Eye of justice
+Outside the Roman arena children sell weird red glass sculptures to the incoming crowd.
+
+The arena chants and cheers. It's afternoon and the sun burns on the sand. The city god watches
+on as a man in chains is brought before him. The gods voice halls through the arena and the crowd goes 
+silent. He accuses the man of treason and praying to the false god. The man begs and cries for forgiveness.
+The god opens the lense of a giant eye on the light house across the city. "The eye will judge you"
+
+The man bursts into flames as the heat ray focuses on him. The crowd roars. The sand around him begins to 
+melt and mingles with the flow of blood. As the eye closes its lid the glass freezes into the sculptures 
+the kids sell outside.
+
+
+
+The map
+The negremo leaves the port in the dark of the night. Kea's father is the cartographer on board and is being
+sent on a secret mission using the map drawn by the atlas god himself. The map is encoded and only works under
+certain star constelations at specific positions on the map as it continuesly changes form.
+
+Both the crew and captain are from Rust city hardened by the sea. Kea's father has been gifted the gift of 
+"star sight" where he can see through objects and see the stars even in broad daylight. The captain meanwhile
+is gifted the gift of "the ancor".
+
+The boat is small and very fast and they soon leave the islands of the iron empire. They see flocks of
+rainbow colored birds crossing the ocean, gigantic eels surfacing, star showers and echoing mist.
+
+After two weeks they reach the first marker point. Once again the map transforms and shows the way leading
+between two mountains. There they make first contact with the thunder king and his navy. Posing as 
+merchant travellers they are offered stay in the royale palace on the main land. 
+
+Their ship is secured with additional ancors and they are invited for dinner with the god king himself. during
+which their cover as merchant is uncovered and they're taken hostage as potential spies.
+Through their gifts they manage to escape but a droplet of ink is sprayed onto the map.
+
+Soon the split mountain lays before them and they meet the god of the sea. He asks for half the crew as a toll.
+They discover that he is actually not the god and battle him and win.
+
+They enter the sea of ever lasting night. The sea is completely still mirroring the night sky above. As they 
+reach their destination nothing happens at first. But then the map transforms into an egg which cracks and 
+reveals a star the gift of light.
+
+The droplet of ink from the god king has transformed into a bug and flies of.
+
+
+
+
+
+The dream
+Kea is imprisoned in a cell, chained to the wall. She closes her eyes and begins to sleep. A butterfly 
+flies through the window and lands on her forehead. 
+
+Kea walks though wooden constructs which spanns hell and heaven. From beneath the orange glow of heat is
+eminating. A butterfly flies through the scene leading her to a chamber in the timber with a cube like 
+building in its middle.
+
+In its middle a golden cocoon is hanging from the ceiling. The cube transforms and the landscape changes 
+into  a desert under the night sky. There are blue glowing foot steps leading her through the sand to a 
+oasis and again in its middle the wooden cube. She enters it but a river of water pushes her out. Suddenly 
+she is underwater with lightning in on the surface. A dark figure floats before her with a dark shadow 
+construct forming behind her back. It opens and reveals to be butterfly wings with glowing orange eyes.
+
+Kea panics and wakes. The shadows on the cell wall show a butterfly flying away.
+
+
+
+
+The light house
+Keas ship enters the lantern city. A giant lantern tower lights the port. They visit the city and eventually
+go to the light tower. The walls are made of painted paer with a spiraling path going upwards inside the tower
+As she goes upwards she notices the black butterflies in the paintings and the effect they seem to have on
+the people. The last image shows a giant butterfly in the sky. Suddenly the orange eyes open and the 
+butterfly flies away. As she looks on the images again they have gone back to normal.
+
+
+
+
+story1: The map
+Kea is the daughter of a cartographer who finds a map made by a god. He dies from poisoning but begs her to 
+follow the map. Kea finds the treasure inside the map >> a star that binds with her, giving her immens powers.
+
+
+story2 the god
+Kea is a priestess in school when she stumbles upon a chained god in the catacombs
+
+
+story3 fugutive
+Kea lives in a monastary where a injured woman is entering. Hunted by bounty hunters the two are the only ones 
+to escape. In her dying breaths the woman gives kea the spark. Now she has to find out why she's hunted and 
+who is hunting her.
+
+
+story4 dreamt
+Kea is given the sprak via a dream from the dream god. She is tasked to unseal the cub in the catacombs below.
+
+
+
+story5 the curse
+Kea is cursed and has to find a cure
+
+story6 revenge
+father killed >> revenge
+
+
+Story7 copy
+Kea finds a copy of herself in the monastary.
+
+
+story8
+Kea god hunter kills one of the sacred deers gaining the gift of insight.
+wise old man -> theocracies bad
+-> gift of insight
+-> 
+
+story9
+kea meets an ex god -> wisdom -> gift
+
+
+
+Historical intersting
+group left behind in enemy territory, prisoner questioned, slave ship, admiral tasked with eradicating pirates,
+discovery of phenomenon, looting of a city, capturing a ship, an earthquake leveling a city, 
+
+
+
+beggar who sees spectrals
+sparks falling from the sky
+agents of the eye
+appearing islands
+oasis
+the vault
+dead god
+pandoras box
+wild gods
+lands below
+rain city, white basilisks, assurai
+ashen plague
+the slave god
+soul storms
+7 swords
+the bazaar -> the crab 
+card game 
+dream lurkers
+
+room to grow 
+
+
+
+feedback:
+
+- levels are bs -> automatic level up
+- tutorials for the different tribes -> tips
+- not as many units -> max 8
+- shorter time -> 20min
+- rank 2 -> 3 extremely tedious
+- first round why?
+- icons shitty
+- items too complicated -> too litle time
+- path -> matchmaking, 
+- clear upgrades
+- voice overs
+- zoom corrections
+
+
+
+
+
+
+
+
+
+Personally found it decently entertaining espcially when they showed some of the more rare archetypes (bunnyhoppors Pogo-Hopper deck)
+
+The format is 
+
+In the end it lead to a high concentration of mages in the top 8
+
+
+
+
+
+
+
+

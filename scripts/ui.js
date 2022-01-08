@@ -34,12 +34,19 @@ class UI {
 
         this.windowNames = ['ladderWindow', 'powerWindow', 'tableWindow', 'decksWindow', 'infoWindow']
 
-        this.archetypeColors = {}
+        this.maxColors = 5
+        this.archetypeColors = {} 
         for (let f of hsFormats) { 
             this.archetypeColors[f] = {}
-            for (let c of hsClasses) { this.archetypeColors[f][c] = {count:0} }
+            for (let c of hsClasses) { this.archetypeColors[f][c] = {count:0, hsClass: c, idx: -1} }
         }
 
+        // { Standard: { 
+        //      Druid: { count: 0}, 
+        //      Archname1: colorIdx1,
+        //      Archname2: colorIdx1,
+        //      ...
+        //   Wild: ...}
 
         for(var tab of this.tabs) { tab.addEventListener("click", this.toggleTabs.bind(this)) }
         for(var fBtn of this.folderButtons) { fBtn.addEventListener("click", this.toggleDropDown.bind(this)) }
@@ -58,6 +65,15 @@ class UI {
         document.querySelector('#overlay').addEventListener('click', this.toggleOverlay.bind(this))
         window.addEventListener('orientationchange', this.getWindowSize.bind(this));
         window.addEventListener('resize', this.getWindowSize.bind(this))
+
+        let year = (new Date()).getFullYear()
+        let copyright = 'Copyright (vS) Vicious Syndicate Gaming - www.ViciousSyndicate.com - © 2016-'+year+'. All rights reserved.'
+        document.querySelector('#ladderWindow .content-footer').innerHTML = copyright
+        document.querySelector('#powerWindow .content-footer').innerHTML = copyright
+        document.querySelector('#tableWindow .content-footer').innerHTML = copyright
+        document.querySelector('#decksWindow .content-footer').innerHTML = copyright
+        document.querySelector('#infoWindow .content-footer').innerHTML = copyright
+
 
         this.toggleOverlay()
         this.updateTime()
@@ -180,27 +196,52 @@ class UI {
         }
     }
 
-    getArchColor(hsClass, arch, hsFormat) {
-        
-        if (hsClasses.indexOf(arch) != -1) {return {color:hsColors[arch], fontColor: hsFontColors[arch]}}
+    getArchColor(hsClass, arch, hsFormat) { 
+        // if arch is actually the name of a hsClass
+        if (hsClasses.indexOf(arch) != -1) {return {color: hsColors[arch], fontColor: hsFontColors[arch]}}
 
-        let archName
-        if (hsClass) { archName = arch +' '+hsClass }
+        // get archName
+        let archName 
+        if (hsClass) { archName = arch +' '+hsClass } // if hsClass != none
         else {
             archName = arch;
             for (let c of hsClasses) {if (archName.indexOf(c) != -1) {hsClass = c; break} }
         }
 
-        if (archName in this.archetypeColors[hsFormat]) { return {color: hsArchColors[hsClass][this.archetypeColors[hsFormat][archName]], fontColor: hsFontColors[hsClass] } }
+        // get color
+        //console.log('get archcolor',hsClass, arch, hsFormat)
+        //let colorIdx = this.archetypeColors[hsFormat][archName].idx
+        if ( archName in this.archetypeColors[hsFormat]) { return this.archetypeColors[hsFormat][archName] }
         else {
-            this.archetypeColors[hsFormat][archName] = this.archetypeColors[hsFormat][hsClass].count
             let count = this.archetypeColors[hsFormat][hsClass].count
-            this.archetypeColors[hsFormat][hsClass].count = (count + 1)%5
-            //if (this.archetypeColors[hsFormat][hsClass].count > 4) {this.archetypeColors[hsFormat][hsClass].count = 4}
-            let color = hsArchColors[hsClass][this.archetypeColors[hsFormat][archName]]
-            return {color: color, fontColor: hsFontColors[hsClass]}
+            let color = hsArchColors[hsClass][count]
+            let fontColor = hsFontColors[hsClass]
+            this.archetypeColors[hsFormat][archName] = { idx: count, hsClass: hsClass, color: color, fontColor: fontColor, name: archName }
+            this.archetypeColors[hsFormat][hsClass].count = (count + 1) % this.maxColors
+            
+            return this.archetypeColors[hsFormat][archName]
         }
     } // get archColor
+
+    sortArchColors() {
+        let sortByName = function(a,b) {}
+        for (let f of hsFormats) {
+            for (let c of hsClasses){
+                let archetypes = []
+                for (let a of this.archetypeColors[f]) {
+                    if (a.idx == -1 || a.hsClass != c) { continue }
+                    archetypes.push(a)
+                }
+                archetypes.sort(sortByName)
+                for (let i in archetypes) {
+                    let colorIdx = i % this.maxColors
+                    archetypes[i].idx = colorIdx
+                    archetypes[i].color = hsArchColors[c][colorIdx]
+                    archetypes[i].fontColor = hsFontColors[c]
+                }
+            }
+        }
+    }
 } // close UI
 
 

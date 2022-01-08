@@ -26,10 +26,8 @@ class TableWindow {
         this.hsTimes = (PREMIUM) ? table_times_premium : table_times
         this.ranks =   (PREMIUM) ? table_ranks_premium : table_ranks
         this.sortOptions = (PREMIUM) ? table_sortOptions_premium : table_sortOptions //['frequency','winrate','matchup','class']
-        this.numArch = 16 // table_numArch
-        this.annotated = false
+        this.numArch = 20 // table_numArch
         this.nrGames = 0
-        this.colorTheme = 0 // 0: red blue,  1: red green 2: grey
         this.overlayText = {}
         this.overlayText.matchup = `
             Here you can see how your deck on the left hand side performs against any other deck on the top. 
@@ -64,7 +62,9 @@ class TableWindow {
         this.f = this.hsFormats[0] 
         this.t = 'last2Weeks' //this.hsTimes[0] 
         this.r = this.ranks[0] 
-        this.sortBy = this.sortOptions[0] //'class' // class, frequency, winrate, matchup
+        this.sortBy = this.sortOptions[0] // class, frequency, winrate, matchup
+        this.annotated = true
+        this.colorTheme = 0 // 0: red blue,  1: red green 2: grey
         
         this.zoomIn = false
         this.zoomArch = null
@@ -82,7 +82,7 @@ class TableWindow {
                     this.data[f][t][r] = null
         }}}
         
-        this.loadData('Standard',callback)
+        this.loadData(this.f ,callback)
         this.setupUI()
     } // close Constructor
 
@@ -102,6 +102,8 @@ class TableWindow {
     }
 
 
+
+    // Check for user input
     // 1. SETUP
     // 2. LOAD DATA
     // 3. PLOTTING
@@ -191,9 +193,10 @@ class TableWindow {
         }
 
         
-        this.questionBtn.addEventListener('click',this.toggleOverlay.bind(this))
-        this.overlayDiv.addEventListener('click',this.toggleOverlay.bind(this))
+        this.questionBtn.onclick = this.toggleOverlay.bind(this)
+        this.overlayDiv.onclick = this.toggleOverlay.bind(this)
         this.nrGamesBtn.onclick = this.annotate.bind(this)
+        if (this.annotated) { this.nrGamesBtn.classList.add('highlighted') }
         document.querySelector('#tableWindow #changeColor').onclick = this.updateColorTheme.bind(this)
 
         if (PREMIUM) {
@@ -233,7 +236,7 @@ class TableWindow {
 
     readData(DATA, hsFormat,callback) {
         var tableData = DATA.val()
-
+        console.log('tabledata:',tableData)
         for (var t of this.hsTimes) {
             for (var r of this.ranks) {
                 this.data[hsFormat][t][r] = new Table(tableData[t][r],hsFormat,t,r,this)
@@ -264,21 +267,16 @@ class TableWindow {
             this.renderOptions()
             return this.checkLoadData( _ => { app.ui.tableWindow.plot() }) 
         }
-        this.data[this.f][this.t][this.r].plot()
+        this.current =  this.data[this.f][this.t][this.r]
+        this.current.plot()
         this.renderOptions()
     }
 
     // simulation (PREMIUM only)
     simulation() {
 
-        if (this.mode == 'simulation') { 
-            //simulationDiv.classList.remove('highlighted')
-            this.mode = 'matchup'
-        }
-        else { 
-            //simulationDiv.classList.add('highlighted') 
-            this.mode = 'simulation'
-        }     
+        if (this.mode == 'simulation') { this.mode = 'matchup' }
+        else { this.mode = 'simulation' }     
         this.renderOptions()
         this.plot()
     }

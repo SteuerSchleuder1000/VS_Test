@@ -1,22 +1,31 @@
 
 
 .option-folder
+    display inline
+    padding 0.4rem 0.4rem 0.2rem 0.4rem
+    background-color $header_folder_bgColor
+    border 0.1rem solid $header_folder_bgColor
+    border-radius 5%
+    margin-left 0.5em
+    &:hover
+        cursor pointer
+        background $header_folder_hi_bgColor
+        .folder-toggle
+            color $header_folder_hi_fColor !important
+
     .folder-toggle
-        background $header_folder_bgColor
+        display flex
         color $header_folder_fColor
+        background-color transparent
         font-weight bold
-        border 0.1rem solid $header_folder_bgColor
-        border-radius 5%
-        padding 0.4rem 0.4rem 0.2rem 0.4rem
-        margin-left 0.5em
+        font-size 0.8rem
+        padding 0
         transition none !important // background 0.3s ease, color 0.3s ease
-        &:hover
-            cursor pointer
-            background $header_folder_hi_bgColor
-            color $header_folder_hi_fColor
+        
     .dropdown
         position absolute
-        margin-left 0.3rem
+        margin-left -0.5rem
+        margin-top 0.4rem
         display flex
         flex-direction column
         background #222

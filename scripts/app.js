@@ -7,13 +7,20 @@
 // app can be accessed globally (as defined in script.js)
 // -> app.ui.ladderWindow, app.ui.tableWindow, app.ui.powerWindow etc.
 
-
+// Todo:
+// add trending section in tier list -> frequencies and winrates
+// sort archetypes alphabetically before color
+// hide 'line chart' in overview
+// set 'last days' as default when accessing time window
+// set 'show numbers' as default when accessing matchups window
+// add 'overall' as first line
+// fix 'decks' window
 
 
 class App {
 
     constructor() {
-
+        console.log('load app')
         this.ui = new UI()
         this.ui.showLoader()
 
@@ -32,7 +39,6 @@ class App {
         this.phase = 0 // loading phase
         this.setupFirebase()
 
-        //document.querySelector('.refreshArrow').addEventListener('click', this.reload.bind(this))
     } // constructor
 
 
@@ -85,7 +91,9 @@ class App {
     load(phase) {
 
         let callback = function () {}
+        console.log('load phase',phase)
         switch (phase) {
+
             case 0:
                 callback = function () { app.load(1) }
                 this.ui.ladderWindow = new LadderWindow(callback)
@@ -119,11 +127,12 @@ class App {
 
 
     startAnalytics(p) { 
-        console.log('start analytics with prob interval',p)
-        window.setInterval( app.analytics ,5*1000) // call analytics every 5 seconds
+        //console.log('start analytics with prob interval',p)
+        //window.setInterval( app.analytics ,5*1000) // call analytics every 5 seconds
     }
 
     analytics() {
+        return
         let random = Math.random()
         if ( random > app.p ) { return } // app.p = probability of uploading within X seconds
         //console.log('uploaded',random,app.p)

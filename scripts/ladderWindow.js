@@ -12,11 +12,10 @@ class LadderWindow {
         this.tab = document.querySelector('#ladder.tab')
         this.chartDiv = document.querySelector('#ladderWindow #chart1')
         this.classDeckOptions = document.querySelector('#ladderWindow .content-header .classDeckOptions')
-        // this.nrGamesBtn = document.querySelector('#ladderWindow .content-header #nrGames')
         this.nrGamesBtn = document.querySelector('#ladderWindow .content-header #showNumbers')
         this.graphTitle = document.querySelector('#ladderWindow .graphTitle')
         this.graphLabel = document.querySelector('#ladderWindow .graphLabel')
-        this.rankFolder = document.querySelector('#ladderWindow .content-header #rankBtn')
+        this.rankFolder = document.querySelector('#ladderWindow .content-header #rankFolder')
         this.optionButtons = document.querySelectorAll('#ladderWindow .optionBtn')
         this.questionBtn = document.querySelector('#ladderWindow .question')
         this.overlayDiv = document.querySelector('#ladderWindow .overlay')
@@ -116,8 +115,8 @@ class LadderWindow {
             for (var t of this.hsTimes) {
                 this.data[f][t] = null
         }}
-
-        this.loadData('Standard', callback)
+        console.log('load ladder:')
+        this.loadData(this.f, callback)
         this.setupUI()
         this.renderOptions()
     } // close Constructor
@@ -183,7 +182,7 @@ class LadderWindow {
 
         this.classDeckOptions.style.display = disp
 
-        document.querySelector('#ladderWindow .content-header .graphOptions #line').style.display = disp
+        document.querySelector('#ladderWindow .content-header .graphOptions #line').style.display = 'none' //disp
         //document.querySelector('#ladderWindow .content-header .graphOptions #number').style.display = disp
         document.querySelector('#ladderWindow .content-header .graphOptions #timeline').style.display = disp
         this.nrGamesBtn.onclick = this.annotate.bind(this)
@@ -240,8 +239,6 @@ class LadderWindow {
         let ref = app.fb_db.ref(this.firebasePath+'/'+hsFormat)
         let reader = function(DATA) { this.readData(DATA, hsFormat, callback) }
         ref.on('value', reader.bind(this), e => console.log('Could not load Ladder Data',e))
-        
-        
     }
 
     loadHistoryData(hsFormat,callback) {
@@ -256,9 +253,12 @@ class LadderWindow {
 
     readData(DATA, hsFormat, callback) {
         if (this.fullyLoaded) {return}
+        console.log('read data')
 
         let ladderData = DATA.val()
         for (let t of this.hsTimes) { this.data[hsFormat][t] = new Ladder(ladderData[t],hsFormat,t,this) }
+        // this.data[hsFormat][this.t] = new Ladder(ladderData[this.t],hsFormat,this.t,this) // !! only for debugging!!
+
         this.fullyLoaded = true
         this.data[hsFormat].fullyLoaded = true
         console.log('ladder loaded: '+ (performance.now()-t0).toFixed(2)+' ms')
@@ -320,8 +320,10 @@ class LadderWindow {
             return this.checkLoadData(callback)
         }
 
-        if (this.plotType == 'timeline') {this.history[this.f].plot(); return}
-        this.data[this.f][this.t].plot();
+        if (this.plotType == 'timeline') { this.current = this.history[this.f] }
+        else { this.current = this.data[this.f][this.t] }
+
+        this.current.plot()
     }
 
 
@@ -357,6 +359,9 @@ class LadderWindow {
         if (btnID == 'map')         {this.plotType = 'map'}
         if (btnID == 'timeline')    {this.plotType = 'timeline'}
 
+        if (btnID == 'wr')          {this.history.mode = 'wr'}
+        if (btnID == 'fr')          {this.history.mode = 'fr'}
+
         if (this.plotType == 'zoom' && this.mode != 'classes') {this.plotType = 'bar'}
         
         this.plot()
@@ -379,7 +384,7 @@ class LadderWindow {
     }
     
 
-    showRankFolder() { this.rankFolder.style.display = 'flex' }
+    showRankFolder() { this.rankFolder.style.display = 'inline' }
     hideRankFolder() { 
         this.rankFolder.style.display = 'none'
         let dropdown = document.querySelector('#ladderWindow #rankDropdown')
@@ -442,9 +447,10 @@ class LadderWindow {
         var colors = app.ui.getArchColor(null, archName, this.f)
 
         legendDiv.className = 'legend-item'
-        legendDiv.style.fontSize = '0.8em'
+        //legendDiv.style.fontSize = '0.8em'
 
-        legendDiv.style = 'background-color:'+colors.color+'; color:'+colors.fontColor
+        legendDiv.style.color = colors.fontColor
+        legendDiv.style.backgroundColor = colors.color
         legendDiv.id = archName
         legendDiv.innerHTML = archName
         legendDiv.onclick = function(e) { 

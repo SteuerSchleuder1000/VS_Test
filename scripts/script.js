@@ -18,7 +18,7 @@ window.onload = function() {
 // Utility
 
 let wrSort = function (a,b) {return a.wr > b.wr ? -1: a.wr < b.wr ? 1 : 0 }
-
+function testFunction(args) { console.log(args) }
 function choice(arr) {return arr[Math.floor(Math.random()*arr.length)]}
 function randint(min, max) {
   min = Math.ceil(min);
@@ -28,6 +28,7 @@ function randint(min, max) {
 //function randomColor() {return 'rgb('+randint(0,255)+','+randint(0,255)+','+randint(0,255)+')'}
 function range(a,b) {var range = []; for (var i=a;i<b;i++) {range.push(i)}; return range}
 function fillRange(a,b,c) {var range = []; for (var i=a;i<b;i++) {range.push(c)}; return range}
+function rangeFill(l, v) { let range = []; for (let i=0; i<l; i++) {range.push(v)}; return range}
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -59,13 +60,30 @@ function normalize(vector) {
 function matrixXvector(matrix,fr) {
         let wr = []
         let fr_n = normalize(fr)
+        console.log('matrix,vector',matrix,fr,fr_n)
         for (let i=0; i<fr.length;i++) {
             let w = 0
             for (let j=0; j<fr.length;j++) { w += fr_n[j] * matrix[i][j] }
             wr.push(w)
         }
         return wr
+}
+
+function matrixXmatrix(a, b) {
+  var aNumRows = a.length, aNumCols = a[0].length,
+      bNumRows = b.length, bNumCols = b[0].length,
+      m = new Array(aNumRows);  // initialize array of rows
+  for (var r = 0; r < aNumRows; ++r) {
+    m[r] = new Array(bNumCols); // initialize the current row
+    for (var c = 0; c < bNumCols; ++c) {
+      m[r][c] = 0;             // initialize the current cell
+      for (var i = 0; i < aNumCols; ++i) {
+        m[r][c] += a[r][i] * b[i][c];
+      }
     }
+  }
+  return m;
+}
 
 
 // MOBILE

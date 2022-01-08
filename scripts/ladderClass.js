@@ -4,12 +4,12 @@
 class Ladder {
 
     constructor (DATA,f,t,window) {
-
+        // console.log('load ladder class',f,t)
         this.maxLegendEntries = 9
         this.maxLines = 10 // max archetypes shown for the line chart
 
         this.lineWidth = 2.7
-        this.fr_min = 0.03
+        this.fr_min = 0//0.03
 
         this.DATA = DATA
         this.f = f
@@ -19,7 +19,7 @@ class Ladder {
         this.archetypes = []
         this.classFr = {} // ??
         this.totGames = 0
-        this.totGamesBrackets = {} // needs bracket in name
+        this.totGamesBrackets = {}
         this.download = {classes:'',decks:''}
 
 
@@ -40,7 +40,7 @@ class Ladder {
         for (var r of this.window.ranks) {
             this.traces.map[r] = null
             this.rankBrackets.push({
-                name: r,//btnIdToText[r],
+                name: r,
                 start: rankRange[r][0],
                 end: rankRange[r][1],
             })
@@ -56,7 +56,7 @@ class Ladder {
             for (hsClass of hsClasses) { color_classes.push(hsColors[hsClass])}
 
             var trace_classes =  {
-                values: fillRange(0,hsClasses.length,0),
+                values: rangeFill(hsClasses.length,0),
                 labels: hsClasses.slice(),
                 marker: {colors:color_classes},
                 hoverinfo: 'label+percent',
@@ -78,12 +78,9 @@ class Ladder {
                 type:'pie',
             }
 
-            this.traces.pie['decks'][bracket.name] = [trace_decks]
+            this.traces.pie.decks[bracket.name] = [trace_decks]
             this.traces.pie['classes'][bracket.name] = [trace_classes]
-        }
-
-
-
+        }// for bracket
 
 
 
@@ -94,100 +91,123 @@ class Ladder {
         let rankData =      this.smoothLadder(DATA.rankData,rankSums.slice())
         let classRankData = this.smoothLadder(DATA.classRankData,rankSums.slice())
         
+        for (let i in ARCHETYPES) { // define this.archetypes
+            let arch = { 
+                        idx: i, 
+                        name: ARCHETYPES[i][1] + ' ' + ARCHETYPES[i][0], 
+                        hsClass: ARCHETYPES[i][0], 
+                        hsArch: ARCHETYPES[i][1] 
+                    }
+            let uiColors = app.ui.getArchColor(arch.hsClass, arch.hsArch, this.f)
+            arch.color = uiColors.color
+            arch.fontColor = uiColors.fontColor
+            this.archetypes.push(arch)
+        } // define archetypes
+
+        let sortByName = function (a,b) {
+            if (a.hsArch == 'Other') { return -1}
+            return a.name > b.name ? -1: a.name < b.name ? 1 : 0 
+        }
+        this.archetypes.sort(sortByName)
 
 
         // Game Sums
-        for (var i=0;i<hsRanks;i++) {
-            this.totGames += rankSums[i]
+        for (let rank in range(0,hsRanks)) {
+            this.totGames += rankSums[rank]
             for (var bracket of this.rankBrackets) {
-                if (i >= bracket.start && i <= bracket.end) { this.totGamesBrackets[bracket.name] += rankSums[i] }
+                if (rank >= bracket.start && rank <= bracket.end) { this.totGamesBrackets[bracket.name] += rankSums[rank] }
             }
+
+            let sortedRankData = [] 
+            for (let i in this.archetypes) { sortedRankData.push(rankData[rank][this.archetypes[i].idx]) }
+            rankData[rank] = sortedRankData
         }
         
 
-
         // Arch Traces
-        for (let i = 0; i < ARCHETYPES.length; i++) {
+        for (let i in this.archetypes) {
     
+            let arch = this.archetypes[i]
             let archFr = []
             let archFr_raw = [] // without merging
             let archFr_brackets = {}
             let archTxt = []
             let fr_avg = 0
-            let archName = ARCHETYPES[i][1] + " " + ARCHETYPES[i][0].replace('§', '');
-            let classIdx = hsClasses.indexOf(ARCHETYPES[i][0])
-            let uiColor = app.ui.getArchColor(ARCHETYPES[i][0],ARCHETYPES[i][1],this.f)            
-            let fontColor = uiColor.fontColor
-            let color = uiColor.color
 
+            let classIdx = hsClasses.indexOf(arch.hsClass)
 
             for (let rank of range(0,hsRanks)) {
 
                 let fr = rankData[rank][i]
                 archFr_raw.push(fr)                
-                archTxt.push(`<b>${archName}     </b><br>freq: ${(fr*100).toFixed(1)}%`)
+                archTxt.push(`<b>${arch.name}     </b><br>freq: ${(fr*100).toFixed(1)}%`)
 
-                // Merge
-                if (fr < this.fr_min && i>8) {
-                    this.traces.bar.decks[classIdx].y[rank] += fr
-                }
-                else {
-                    fr_avg += fr
-                    archFr.push(fr)
-                }
                 
+
+
                 for (let bracket of this.rankBrackets) {
                     if (rank == bracket.start) {
-                        // !!! bracket.name < bracket.name
-                        this.traces.pie['decks'][bracket.name][0].values.push(fr)
-                        this.traces.pie['decks'][bracket.name][0].labels.push(archName)
-                        this.traces.pie['decks'][bracket.name][0].marker.colors.push(color)
+                        this.traces.pie.decks[bracket.name][0].values.push(fr)
+                        this.traces.pie.decks[bracket.name][0].labels.push(arch.name)
+                        this.traces.pie.decks[bracket.name][0].text.push(arch.name)
+                        this.traces.pie.decks[bracket.name][0].marker.colors.push(arch.color)
                     }
                     if (rank > bracket.start && rank <= bracket.end) {
-                        this.traces.pie['decks'][bracket.name][0].values[i] += fr
+                        this.traces.pie.decks[bracket.name][0].values[i] += fr
                     }
                     if (rank == bracket.end) {
                         this.traces.pie.decks[bracket.name][0].values[i] /= (bracket.end - bracket.start + 1)
-                        this.traces.pie['decks'][bracket.name][0].text.push(archName)
                         archFr_brackets[bracket.name] = this.traces.pie.decks[bracket.name][0].values[i]
 
                         // Merge Pie
-                        var fr_pie = this.traces.pie.decks[bracket.name][0].values[i]
-                        if (fr_pie <this.fr_min && i>8) {
+                        let fr_pie = this.traces.pie.decks[bracket.name][0].values[i]
+                        if (fr_pie < this.fr_min && i>8) { // if pie is smaller than fr_min and not 'Other'
                             this.traces.pie.decks[bracket.name][0].values[i] = 0
                             this.traces.pie.decks[bracket.name][0].values[classIdx] += fr_pie
                         } 
                     }
+                } // for brackets
+
+                // Merge
+                // if the archetype frequency is below this.fr_min and it's not 'Other'
+                // -> add the fr to 'Other' of that class
+                if (fr < this.fr_min && i>8) { 
+                    this.traces.bar.decks[classIdx].y[rank] += fr
+                    archFr.push(0)
+                }
+                else {
+                    fr_avg += fr
+                    archFr.push(fr)
                 }
             } // for ranks
 
             fr_avg /= hsRanks
             
             var arch_bar = {
-                x:range(0,hsRanks),
-                y:archFr.slice(),
-                name: archName,
+                x: range(0,hsRanks),
+                y: archFr.slice(),
+                name: arch.name,
                 text: archTxt,
                 hoverinfo: 'text',
-                marker: { color: color },
+                marker: { color: arch.color },
                 type: 'bar',
                 winrate: 0,
-                hsClass: ARCHETYPES[i][0]+ARCHETYPES[i][1],
+                hsClass: this.archetypes[i].hsClass + ARCHETYPES[i][1],
             }
             
             var arch_line = {
                 x: range(0,hsRanks),
                 y: archFr_raw.slice(),
-                name: archName,
+                name: arch.name,
                 text: archTxt,
                 hoverinfo: 'text',
                 orientation: 'h',
-                marker: {color: color,},
+                marker: {color: arch.color,},
                 line: {width: this.lineWidth},
                 type: 'scatter',
                 mode: 'lines',
                 winrate: 0,
-                hsClass: ARCHETYPES[i][0]+ARCHETYPES[i][1],
+                hsClass: ARCHETYPES[i][0] + ARCHETYPES[i][1],
                 fr: fr_avg,
             }
 
@@ -195,7 +215,7 @@ class Ladder {
             this.traces.bar.decks.push(arch_bar)
             this.traces.line.decks.push(arch_line)
 
-            let archetype = {
+            /*let archetype = {
                 name: archName, 
                 hsClass: ARCHETYPES[i][0], 
                 fr: fr_avg, 
@@ -203,33 +223,43 @@ class Ladder {
                 fr_brackets: archFr_brackets,
                 color: color, 
                 fontColor: fontColor
-            }
+            }*/
+            arch.fr = fr_avg
+            arch.fr_ranks = archFr_raw.slice()
+            arch.fr_brackets = archFr_brackets
 
-            this.archetypes.push(archetype)
         } // close for ARCHETYPES
                 
 
+
+
+
         // Class Traces
-        for (var i of range(0,9)) {
+        for (var i in hsClasses) {
             var hsClass = hsClasses[i]
             var classFR = []
             var classTxt = []
             var fr_avg = 0
 
+            let otherArch = this.traces.bar.decks[i]
+
             for (let rank of range(0,hsRanks)) {                
                 let fr = classRankData[rank][i]
                 classFR.push(fr)
-                classTxt.push(hsClass+" "+(fr*100).toFixed(2)+"%")
+                classTxt.push(hsClass+" "+(fr*100).toFixed(1)+"%")
                 fr_avg += fr
 
                 for (var bracket of this.rankBrackets) {
                     if (rank >= bracket.start && rank <= bracket.end) { this.traces.pie['classes'][bracket.name][0].values[i] += fr }
                     if (rank == bracket.end) { this.traces.pie['classes'][bracket.name][0].values[i] /= (bracket.end-bracket.start +1) }
                 }
+                
+                //updating 'Other' archetypes text after all the merging
+                otherArch.text[rank] = `<b>${otherArch.name}     </b><br>freq: ${(otherArch.y[rank]*100).toFixed(1)}%`
             }
 
             // push zoom traces
-            let fr_tot = fillRange(0,hsRanks,0)
+            let fr_tot = rangeFill(hsRanks,0)
             for (let a of this.archetypes) {
                 if (a.hsClass != hsClass) {continue}
                 var text = []
@@ -256,7 +286,7 @@ class Ladder {
             }
 
             for (var a of this.traces.zoom[hsClass]) {
-                for (var rank=0;rank<hsRanks;rank++) { 
+                for (var rank=0; rank < hsRanks; rank++) { 
                     a.y[rank] /= (fr_tot[rank]>0) ? fr_tot[rank] : 1
                     a.text[rank] = a.name+'<br>'+(100*a.y[rank]).toFixed(1)+'% of '+a.hsClass+'<br>'+(100*a.overall[rank]).toFixed(1)+'% overall'
                 }
@@ -300,9 +330,10 @@ class Ladder {
             this.traces.line.classes.push(class_line)
 
             //this.classLegend.push({name:hsClass, color: hsColors[hsClass]})
+             // Annotate 'Other' archetypes
+
         }// close for Classes
         
-
         let classSort = function (a, b) { return a.hsClass < b.hsClass ? -1 : a.hsClass > b.hsClass ? 1 : 0; }
         let freqSort = function (a,b) { return a.fr > b.fr ? -1 : a.fr < b.fr ? 1 : 0;}
 

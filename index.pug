@@ -28,7 +28,7 @@ html(lang='en')
         //    button#decks.mobileBtn.optionBtn.folderBtn Decks
         //    button#info.mobileBtn.optionBtn.folderBtn Info
         .mobileTabs
-          button.tab Tab Title
+          button.tab Overview
         .tabs
           button#ladder.tab.highlighted Overview
           button#power.tab Tier List
@@ -98,9 +98,13 @@ html(lang='en')
             .formatOptions.optionBar
               button#Standard.optionBtn Standard
               button#Wild.optionBtn Wild
+              #rankFolder.option-folder
+                button#rankBtn.folder-toggle All Ranks
+                .dropdown#rankDropdown.hidden 
             .dispOptions.optionBar
               button#brackets.optionBtn Tier Lists
               button#ranks.optionBtn Ranks
+              button#trends.optionBtn Trends
             .shadow
           .overlay
             p.overlayText

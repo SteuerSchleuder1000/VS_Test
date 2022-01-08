@@ -1,5 +1,4 @@
 
-
 const DISCORDLINK = 'https://discordapp.com/invite/0oxwpa5Mtc2VA2xC'
 const POLLLINK = 'https://docs.google.com/forms/d/e/1FAIpQLSel6ym_rJHduxkgeimzf9HdNbBMB5Kak7Fmk0Bl2O7O8XhVGg/viewform?usp=sf_link'
 const VSGOLDINFOLINK = 'https://www.vicioussyndicate.com/membership/vs-gold/'
@@ -73,10 +72,9 @@ To give feedback simply click on the discord link below:<br><br><br>
 // Global Variables
 
 const ladder_times =  ['lastDay','last2Weeks']
-const ladder_times_premium = ['last6Hours','last12Hours','lastDay','last3Days','lastWeek','last2Weeks']
+const ladder_times_premium = ['lastDay','last3Days','lastWeek','last2Weeks']//['last6Hours','last12Hours','lastDay','last3Days','lastWeek','last2Weeks']
 
 const ladder_ranks =  ['ranks_all']
-// const ladder_ranks_premium = ['ranks_all','ranks_L_5','ranks_6_15']
 const ladder_ranks_premium = ['ranks_all','ranks_L','ranks_1_4','ranks_5_14']
 
 const ladder_plotTypes = []
@@ -89,18 +87,18 @@ const table_sortOptions_premium = ['frequency','winrate','matchup']
 
 const table_numArch = 16
 const table_ranks =   ['ranks_all']
-// const table_ranks_premium = ['ranks_all','ranks_L_5','ranks_6_15']
-const table_ranks_premium = ['ranks_all','ranks_L','ranks_1_4','ranks_5_14']
+// const table_ranks_premium = ['ranks_all','ranks_L','ranks_1_4','ranks_5_14']
+const table_ranks_premium = ['ranks_all','ranks_l','ranks_l_d4','ranks_l_d10','ranks_l_p']
 
 
 var MU_COLOR_IDX = 0
 
 const hsRanks =       21
-const hsClasses =     ['Druid','Hunter','Mage','Paladin','Priest','Rogue','Shaman','Warlock','Warrior']
+const hsClasses =     ['DemonHunter','Druid','Hunter','Mage','Paladin','Priest','Rogue','Shaman','Warlock','Warrior']
 const hsFormats =     ['Standard','Wild']
 
 
-const rankRange = {
+const rankRange = { 
     ranks_all:      [0,20],
     ranks_L:        [0,0],
     ranks_1_5:      [1,5],
@@ -141,6 +139,11 @@ const btnIdToText = {
     ranks_L_5: 'Ranks L-5',
     ranks_6_15: 'Ranks 6-15',
     ranks_5_14: 'Ranks 5-14',
+
+    ranks_l: 'Legend Ranks',
+    ranks_l_d4: 'Ranks L-D4',
+    ranks_l_d10: 'Ranks L-D10',
+    ranks_l_p: 'Ranks L-P',
 
     last6Hours: 'Last 6 Hours',
     last12Hours: 'Last 12 Hours',
@@ -200,6 +203,7 @@ const btnIdToText_m = {
 
 // // Material
 const hsColors = {
+    DemonHunter: '#689f38',
     Druid:      '#795548',
     Hunter:     '#689f38',
     Mage:       '#4fc3f7',
@@ -214,6 +218,7 @@ const hsColors = {
 
 
 const hsArchColors = { // switch switch
+    DemonHunter:['#67b35f','#329c50','#abda48','#bce86a','#1f7922'],
     Druid:      ['#3d2a25','#694f3f','#543f33','#b88230','#d39e48'],
     Hunter:     ['#67b35f','#329c50','#abda48','#bce86a','#1f7922'],
     Mage:       ['#22abb1','#74d8dd','#38ccd8','#a4dadc','#b5eef0'],
@@ -227,6 +232,7 @@ const hsArchColors = { // switch switch
 
 
 var hsFontColors = {
+    DemonHunter:'#222',
     Druid:      '#fff',
     Hunter:     '#222',
     Mage:       '#222',
